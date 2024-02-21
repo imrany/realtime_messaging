@@ -1,19 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBPM98K05JL-X93UPHkcyvLG0RYCGeF9DQ",
-  authDomain: "e-students-portal.firebaseapp.com",
-  projectId: "e-students-portal",
-  storageBucket: "e-students-portal.appspot.com",
-  messagingSenderId: "858727043051",
-  appId: "1:858727043051:web:7993745f94b791f2f993ae",
-  measurementId: "G-BT6BQKGZ17"
+  apiKey: "AIzaSyCTcBHD3I-dEOeddax_dOhShqurLU838M4",
+  authDomain: "e-ruiri-portal.firebaseapp.com",
+  projectId: "e-ruiri-portal",
+  storageBucket: "e-ruiri-portal.appspot.com",
+  messagingSenderId: "727306142930",
+  appId: "1:727306142930:web:9bf6e33b7880567601d90b",
+  measurementId: "G-VZXH7S7N0K"
 };
 
 // Initialize Firebase
@@ -23,4 +23,6 @@ const auth = getAuth(app);
 export{
   auth,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
 }
