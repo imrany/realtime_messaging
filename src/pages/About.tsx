@@ -24,7 +24,7 @@ function About() {
 					</div>
 					<div className="flex items-center gap-2">
 						<FaPhone />
-						<a href="tel:+254734720752" target="_blank" rel="noopener noreferrer">+254734720752</a>
+						<a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
 					</div>
 					<div className="flex items-center gap-2">
 						<FaFacebook />
@@ -34,7 +34,7 @@ function About() {
 
 				<div className="mt-6 pb-6 text-gray-600">
 					<p className="text-xl text-slate-600 font-semibold">Contact Patnerships by Email</p>
-					<p>If you wish to write us an email instead please use <a href="mailto:imranmat254@gmail.com" className="text-[var(--theme-blue)]" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a></p>
+					<p>If you wish to write us an email instead please use <a href="mailto:blacksharkchi@proton.me" className="text-[var(--theme-blue)]" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a></p>
 				</div>
 			</div>
         </div>
