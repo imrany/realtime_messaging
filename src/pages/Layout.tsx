@@ -56,7 +56,7 @@ export default function Layout(){
   ]
   return (
     <>
-      <nav className="mb-3 pt-3 border-b-[1px]">
+      <nav className="pt-3 border-b-[1px]">
         <div className="px-2">
          <p className="text-lg font-semibold">Team Ruiru Portal</p>
 	      </div>
@@ -66,9 +66,8 @@ export default function Layout(){
         </div>
       </nav>
 
-      <div className="px-1">
-        <Outlet />
-      </div>
+      <Outlet />
+      
     </>
   )
 };
