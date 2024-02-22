@@ -4,7 +4,6 @@ import { auth, onAuthStateChanged } from "./firebaseConfig/config";
 import { ToastContainer } from 'react-toastify';
 import { Toaster } from "react-hot-toast";
 import Layout from './pages/Layout';
-import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Notification from './pages/Notification';
@@ -52,8 +51,7 @@ function App() {
 	    <Routes>
         <Route path="/login" element={!isAuth?<Login/>:<Navigate to="/"/>}/>
         <Route path="/" element={isAuth?<Layout />:<Navigate to="/login"/>}>
-          <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
+          <Route index element={<About />} />
           <Route path="notification" element={<Notification />} />
           <Route path="schedule" element={<Schedule />} />
           <Route path="membership" element={<Membership />} />
@@ -63,8 +61,8 @@ function App() {
           <Route path="songs" element={<Songs />} />
           <Route path="archives" element={<Archives />} />
           <Route path="important" element={<Important />} />
-          <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
