@@ -17,6 +17,8 @@
   -moz-osx-font-smoothing: grayscale;
 
   --theme-blue:#646cff;
+  --theme-dark:#213547;
+  --theme-gray:#f9f9f9;
   --hover-blue:#535bf2;
 }
 
@@ -27,7 +29,6 @@
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;    
-  background-color: #f9f9f9;
   cursor: pointer;
   transition: border-color 0.25s;
 }
