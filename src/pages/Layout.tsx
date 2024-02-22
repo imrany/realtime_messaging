@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { auth, signOut } from "../firebaseConfig/config"
+import Footer from "../components/Footer";
 
 export default function Layout(){
   const location=useLocation()
@@ -67,7 +68,7 @@ export default function Layout(){
       </nav>
 
       <Outlet />
-      
+      <Footer/>
     </>
   )
 };
