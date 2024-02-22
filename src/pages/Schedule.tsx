@@ -56,7 +56,7 @@ function Schedule() {
                         <p className="text-[20px] text-[var(--gray-heading)] font-semibold">Schedule / Programmes</p>
                         <button className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none px-6 py-2 items-center justify-center">
                             <FaPlus className="w-4 h-4 mr-1"/>
-                            <span>Add a new Schedule</span>
+                            <span>Add a new schedule</span>
                         </button>
                     </div>
                     <div className="flex justify-between items-center pt-5">
