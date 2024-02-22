@@ -1,6 +1,7 @@
 import Select from "react-select"
 import { FaFileCsv, FaFilePdf, FaPlus } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { MdMoreVert } from "react-icons/md";
 let sort_options=[
   {
     label:"Ascending",
@@ -12,8 +13,8 @@ let sort_options=[
   }
 ]
 
-function Schedule() {
-    let schedules=[
+export default function Events() {
+    let events=[
         {
             date:"03/12/2023",
             programme:"Community walk & Charity",
@@ -48,15 +49,29 @@ function Schedule() {
     function handleSort(value:string){
         console.log(value)
     }
+
+    let checkedBoxArrayValues:string[]=[]
+    function checkedBoxHandler(e:any) {
+        if(!e.target.checked){
+            const index = checkedBoxArrayValues.indexOf(e.target.value);
+            if (index > -1) { // only splice array when item is found
+                checkedBoxArrayValues.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        }else{
+            checkedBoxArrayValues.push(e.target.value)
+        }
+        let stringifiedCheckedBoxArrayValues=JSON.stringify(checkedBoxArrayValues)
+        localStorage.setItem("checked_items",stringifiedCheckedBoxArrayValues)
+    }
     return (
         <div className="p-10">
             <div className="mt-8 w-full rounded-lg border-[1px] text-sm">
                 <div className="flex flex-col py-6 px-8 border-b-[1px]">
                     <div className="flex justify-between items-center">
-                        <p className="text-[20px] text-[var(--gray-heading)] font-semibold">Schedule / Programmes</p>
+                        <p className="text-[20px] text-[var(--gray-heading)] font-semibold">Events</p>
                         <button className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none px-6 py-2 items-center justify-center">
                             <FaPlus className="w-4 h-4 mr-1"/>
-                            <span>Add a new schedule</span>
+                            <span>Add a new event</span>
                         </button>
                     </div>
                     <div className="flex justify-between items-center pt-5">
@@ -89,22 +104,28 @@ function Schedule() {
                                 <input type="checkbox" disabled className="w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                             </th> 
                             <th className="text-left">Date</th>
-                            <th className="text-left">Programme</th>
+                            <th className="text-left">Events</th>
                             <th className="text-left">Location</th>
+                            <th className="text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
-                        {schedules.map((schedule,index)=>{
+                        {events.map((schedule,index)=>{
                             return(
-                                <tr title={`#${schedule.programme}`} key={index} className="text-[#64748B] hover:bg-slate-50 cursor-pointer">
+                                <tr title={`#${schedule.programme}`} key={index} className="text-[#64748B]">
                                     <td className="text-left">
                                     <div>
-                                        <input type="checkbox" className="w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
+                                        <input type="checkbox" value={schedule.programme} onChange={checkedBoxHandler} className="w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                                     </div>
                                     </td>
                                     <td className="text-left">{schedule.date}</td>
                                     <td className="text-left">{schedule.programme}</td>
                                     <td className="text-left">{schedule.location}</td>
+                                    <td className="text-left" title="Actions">
+                                        <div className="rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer">
+                                            <MdMoreVert className="w-6 h-4"/>
+                                        </div>
+                                    </td>
                                 </tr>
                             )
                         })}
@@ -114,5 +135,3 @@ function Schedule() {
         </div>
     );
 };
-
-export default Schedule;

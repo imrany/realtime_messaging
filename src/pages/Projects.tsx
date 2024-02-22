@@ -12,7 +12,7 @@ let sort_options=[
   }
 ]
 
-export default function Contributions() {
+export default function Projects() {
     let schedules=[
         {
             date:"03/12/2023",

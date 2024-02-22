@@ -8,9 +8,9 @@ import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Notification from './pages/Notification';
 import Login from "./pages/Login";
-import Schedule from "./pages/Schedule";
+import Events from "./pages/Events";
 import Membership from "./pages/Membership";
-import Contributions from "./pages/Contributions";
+import Projects from "./pages/Projects";
 import Resources from "./pages/Resources";
 import ChatRoom from "./pages/ChatRoom";
 import Songs from "./pages/Songs";
@@ -53,9 +53,9 @@ function App() {
         <Route path="/" element={isAuth?<Layout />:<Navigate to="/login"/>}>
           <Route index element={<About />} />
           <Route path="notification" element={<Notification />} />
-          <Route path="schedule" element={<Schedule />} />
+          <Route path="events" element={<Events />} />
           <Route path="membership" element={<Membership />} />
-          <Route path="contributions" element={<Contributions />} />
+          <Route path="projects" element={<Projects />} />
           <Route path="resources" element={<Resources />} />
           <Route path="chat_room" element={<ChatRoom />} />
           <Route path="songs" element={<Songs />} />
