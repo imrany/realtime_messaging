@@ -14,12 +14,8 @@ export default function Layout(){
 
   let links=[
     {
-      name:"Home",
-      to:"/"
-    },
-    {
       name:"About",
-      to:"/about"
+      to:"/"
     },
     {
       name:"Notification",
