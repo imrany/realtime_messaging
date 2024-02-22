@@ -5,7 +5,6 @@ import { auth, signInWithEmailAndPassword } from "../firebaseConfig/config";
 import { err_toast } from "../components/Feedback";
 
 function Login() {
-    let [login_error,setLogin_error]=useState("")
     let [eye_icon,setEye_icon]=useState(<FaEye className="h-5 w-5"/>);
 
     function toggle_password(){
@@ -44,7 +43,6 @@ function Login() {
                 <div className="sm:my-[40px] max-sm:my-[20px]">
                 <p className="text-[30px] text-[#1e293b] mb-[8px] font-semibold">Sign in</p>
                 <p className="text-[#64748b] text-[14px]">Enter your credentials to access Team Ruiri Portal.</p>
-                    <p className="text-[var(--red-error)] text-xs mt-1 capitalize">{login_error}</p>
                 </div>
                 <form onSubmit={(e)=>handleLogin(e)} className="flex flex-col text-sm">
                 <div className="flex flex-col mb-3">
