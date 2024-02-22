@@ -16,11 +16,11 @@ function About() {
 				<div className="flex flex-col gap-3 mt-3 pb-6 text-gray-600 border-b-[1px]">
 					<div className="flex items-center gap-2">
 						<FaBuilding/>
-						<p>Ruiri, Nairobi</p>
+						<p>Ruiru, Nairobi</p>
 					</div>
 					<div className="flex items-center gap-2">
 						<FaLocationPin />
-						<p>Team Ruiri, Nairobi</p>
+						<p>Team Ruiru, Nairobi</p>
 					</div>
 					<div className="flex items-center gap-2">
 						<FaPhone />
@@ -28,13 +28,13 @@ function About() {
 					</div>
 					<div className="flex items-center gap-2">
 						<FaFacebook />
-						<a href="https://facebook.com" target="_blank" rel="noopener noreferrer">@teamruiri</a>
+						<a href="https://facebook.com" target="_blank" rel="noopener noreferrer">@teamruiru</a>
 					</div>
 				</div>
 
 				<div className="mt-6 pb-6 text-gray-600">
 					<p className="text-xl text-slate-600 font-semibold">Contact Patnerships by Email</p>
-					<p>If you wish to write us an email instead please use <a href="mailto:imranmat254@gmail.com" className="text-[var(--theme-blue)]" target="_blank" rel="noopener noreferrer">teamruiri@gmail.com</a></p>
+					<p>If you wish to write us an email instead please use <a href="mailto:imranmat254@gmail.com" className="text-[var(--theme-blue)]" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a></p>
 				</div>
 			</div>
         </div>

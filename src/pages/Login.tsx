@@ -42,7 +42,7 @@ function Login() {
             <div className="flex flex-col sm:w-[440px] max-sm:w-[85vw]">
                 <div className="sm:my-[40px] max-sm:my-[20px]">
                 <p className="text-[30px] text-[#1e293b] mb-[8px] font-semibold">Sign in</p>
-                <p className="text-[#64748b] text-[14px]">Enter your credentials to access Team Ruiri Portal.</p>
+                <p className="text-[#64748b] text-[14px]">Enter your credentials to access Team Ruiru Portal.</p>
                 </div>
                 <form onSubmit={(e)=>handleLogin(e)} className="flex flex-col text-sm">
                 <div className="flex flex-col mb-3">

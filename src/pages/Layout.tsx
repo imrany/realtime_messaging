@@ -58,7 +58,7 @@ export default function Layout(){
     <>
       <nav className="mb-3 pt-3 border-b-[1px]">
         <div className="px-2">
-         <p className="text-lg font-semibold">Team Ruiri Portal</p>
+         <p className="text-lg font-semibold">Team Ruiru Portal</p>
 	      </div>
         <div className="flex text-white bg-[var(--theme-blue)] pr-2">
 	        {links.map((link,index)=>(<Link to={link.to} className={location.pathname===link.to?"px-2 py-3 bg-white text-[#213547]":"px-2 py-3 hover:bg-slate-200 hover:text-[#213547]"} key={index}>{link.name}</Link>))}
