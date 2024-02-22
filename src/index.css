@@ -30,6 +30,18 @@
   background-size: cover;
 }
 
+table{
+  width: 100%;
+}
+td{
+  padding: 28px;
+  text-align: center;
+}
+th {
+  padding: 12px 24px;
+  background-color: rgb(231, 237, 245);
+}
+
 .button {
   border-radius: 8px;
   border: 1px solid transparent;
