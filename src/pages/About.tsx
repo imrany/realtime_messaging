@@ -1,4 +1,4 @@
-import { FaBuilding, FaPhone } from "react-icons/fa"
+import { FaBuilding, FaFacebook, FaPhone } from "react-icons/fa"
 import { FaLocationPin } from "react-icons/fa6";
 function About() {
     return (
@@ -25,6 +25,10 @@ function About() {
 					<div className="flex items-center gap-2">
 						<FaPhone />
 						<a href="tel:+254734720752" target="_blank" rel="noopener noreferrer">+254734720752</a>
+					</div>
+					<div className="flex items-center gap-2">
+						<FaFacebook />
+						<a href="https://facebook.com" target="_blank" rel="noopener noreferrer">@teamruiri</a>
 					</div>
 				</div>
 
