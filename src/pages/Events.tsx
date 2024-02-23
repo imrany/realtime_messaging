@@ -1,7 +1,11 @@
 import Select from "react-select"
 import { FaFileCsv, FaFilePdf, FaPlus } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { MdMoreVert } from "react-icons/md";
+import { MdClose, MdMoreVert } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { Event } from "../types/definitions";
+import { addDoc, collection, db, deleteDoc, doc, getDocs, onSnapshot } from "../firebaseConfig/config";
+import { err_toast } from "../components/Feedback";
 
 let sort_options=[
   {
@@ -14,45 +18,60 @@ let sort_options=[
   }
 ]
 
+let location_options=[
+    {
+      label:"Ruiru, Nairobi",
+      value:"Ruiru, Nairobi"
+    },
+    {
+      label:"Karen, Nairobi",
+      value:"Karen, Nairobi"
+    }
+]
+
 export default function Events() {
-    let events=[
+    let [location,setLocation]=useState("")
+    let [showAddEventForm,setShowAddEventForm]=useState(false)
+    let [events,setEvents]=useState<Event[]>([
         {
-            date:"03/12/2023",
-            programme:"Community walk & Charity",
-            location:"Ruiru, Nairobi"
-        },
-        {
-            date:"03/01/2024",
-            programme:"Charity & Visiting orphanage",
-            location:"Ruiru, Nairobi"
-        },
-        {
-            date:"13/02/2024",
-            programme:"Sports & Marathon",
-            location:"Ruiru, Nairobi"
-        },
-        {
-            date:"15/02/2024",
-            programme:"Happiness & Fun fare",
-            location:"Ruiru, Nairobi"
-        },
-        {
-            date:"18/02/2024",
-            programme:"Charity & Village clean up activities",
-            location:"Ruiru, Nairobi"
-        },
-        {
-            date:"19/02/2024",
-            programme:"Charity & Visiting the sick",
-            location:"Ruiru, Nairobi"
+            programme:"",
+            project:"",
+            location:"",
+            date:""
         }
-    ]
+    ])
+
+    const updateEvent = onSnapshot(collection(db, "events"), () => {
+        return "changed"
+    });
+
+    async function fetchEventsFromFirebase(){
+        try {
+            const querySnapshot=await getDocs(collection(db,"events"));
+            let list:Event[]=[]
+            querySnapshot.forEach((doc) => {
+                let data={
+                    id:doc.id,
+                    programme:doc.data().programme,
+                    project:doc.data().project,
+                    date:doc.data().date,
+                    location:doc.data().location
+                }
+                list.push(data)
+            });
+            setEvents([...list])
+        } catch (error:any) {
+            console.log(error)
+            err_toast(error.message)
+        }
+    }
+
     function handleSort(value:string){
         console.log(value)
     }
 
     let checkedBoxArrayValues:string[]=[]
-    function checkedBoxHandler(e:any) {
+    async function checkedBoxHandler(e:any) {
         let header:any=document.getElementById("header")
         if(!e.target.checked){
             const index = checkedBoxArrayValues.indexOf(e.target.value);
@@ -90,10 +109,10 @@ export default function Events() {
             checkedBoxArrayValues=[]
         })
 
-        document.getElementById("deleteCheckedItems")?.addEventListener("click",async()=>{
+        async function deleteEvent(){
             try{
-                checkedBoxArrayValues.map((checkedItem:string)=>{
-                  console.log(checkedItem)
+                checkedBoxArrayValues.map(async (checkedItem:string)=>{
+                    await deleteDoc(doc(db,"events",checkedItem))
                 })
                 header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
                 for (let i = 0; i < checkedBoxArrayValues.length; i++) {
@@ -103,16 +122,39 @@ export default function Events() {
                 }
             }catch(error:any){
                 console.log(error.message)
+                err_toast(error.message)
             }
-        })
+        }
+        document.getElementById("deleteCheckedItems")?.addEventListener("click",deleteEvent)
     }
+
+    async function handleCreateEvent(e:any) {
+        try {
+            e.preventDefault()
+            let event:Event={
+                date:e.target.date.value,
+                project:e.target.project.value,
+                programme:e.target.programme.value,
+                location,
+            }
+            await addDoc(collection(db,"events"),event);
+            e.target.reset()
+        } catch (error:any) {
+            console.log(error)
+            err_toast(error.message)
+        }
+    }
+
+    useEffect(()=>{
+        fetchEventsFromFirebase()
+    },[updateEvent])
     return (
-        <div className="p-10">
-            <div className="mt-8 w-full rounded-lg border-[1px] text-sm">
+        <div className="p-10 flex gap-4 max-sm:flex-wrap">
+            <div className="mt-8 flex-grow rounded-lg border-[1px] text-sm">
                 <div className="flex flex-col py-6 px-8 border-b-[1px]">
                     <div className="flex justify-between items-center">
                         <p className="text-[20px] text-[var(--gray-heading)] font-semibold">Events</p>
-                        <button className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none px-6 py-2 items-center justify-center">
+                        <button onClick={()=>setShowAddEventForm(true)} className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none px-6 py-2 items-center justify-center">
                             <FaPlus className="w-4 h-4 mr-1"/>
                             <span>Add a new event</span>
                         </button>
@@ -147,23 +189,25 @@ export default function Events() {
                                 <input type="checkbox" disabled className="w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                             </th> 
                             <th className="text-left">Date</th>
-                            <th className="text-left">Events</th>
+                            <th className="text-left">Programme</th>
+                            <th className="text-left">Project</th>
                             <th className="text-left">Location</th>
                             <th className="text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
-                        {events.map((schedule,index)=>{
+                        {events.map((event)=>{
                             return(
-                                <tr title={`#${schedule.programme}`} key={index} className="text-[#64748B]">
+                                <tr title={`#${event.programme}`} key={event.id} className="text-[#64748B]">
                                     <td className="text-left">
                                     <div>
-                                        <input id={`checkbox_${schedule.programme}`} type="checkbox" value={schedule.programme} onChange={checkedBoxHandler} className="checkbox w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
+                                        <input id={`checkbox_${event.id}`} type="checkbox" value={event.id} onChange={checkedBoxHandler} className="checkbox w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                                     </div>
                                     </td>
-                                    <td className="text-left">{schedule.date}</td>
-                                    <td className="text-left">{schedule.programme}</td>
-                                    <td className="text-left">{schedule.location}</td>
+                                    <td className="text-left">{event.date}</td>
+                                    <td className="text-left">{event.programme}</td>
+                                    <td className="text-left">{event.project}</td>
+                                    <td className="text-left">{event.location}</td>
                                     <td className="text-left" title="Actions">
                                         <div className="rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer">
                                             <MdMoreVert className="w-6 h-4"/>
@@ -175,6 +219,41 @@ export default function Events() {
                     </tbody>
                 </table>
             </div>
+            {showAddEventForm?(
+                <div className="mt-8 h-fit rounded-lg border-[1px] text-sm p-4 w-[25vw]">
+                    <div className="flex justify-between items-center">
+                        <p className="text-[20px] font-semibold">Add a new event</p>
+                        <button title="close" onClick={()=>setShowAddEventForm(false)}>
+                            <MdClose className="w-5 h-5"/>
+                        </button>
+                    </div>
+                    <form onSubmit={handleCreateEvent} className="flex mt-5 flex-col text-sm">
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="programme">Programme <span className="text-red-500">*</span></label>
+                        <div className="pb-4">
+                            <input id="programme" name="programme" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Charity work" required/>
+                        </div>
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="project"> Project name <span className="text-red-500">*</span></label>
+                        <div className="pb-4">
+                            <input id="project" name="project" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Visiting the poor" required/>
+                        </div>
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="date"> Choose Date <span className="text-red-500">*</span></label>
+                        <div className="pb-4">
+                            <input id="date" name="date" type="date" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Visiting the poor" required/>
+                        </div>
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="location"> Choose Location <span className="text-red-500">*</span></label>
+                        <div className="pb-4">
+                            <Select
+                                id="location"
+                                className="w-full focus:outline-[var(--theme-blue)] focus:outline-[1px]"
+                                placeholder="Location :"
+                                options={location_options}
+                                onChange={(e:any)=>setLocation(e.value)}
+                            />
+                        </div>
+                        <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Submit</button>
+                    </form>
+                </div>
+            ):""}
         </div>
     );
 };
