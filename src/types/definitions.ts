@@ -21,8 +21,15 @@ interface Project{
     account_for_payment:number
 }
 
+interface Song{
+    id?:string,
+    song_name:string,
+    youtube_link:string
+}
+
 export type{
     Event,
     Member,
     Project,
+    Song,
 }
