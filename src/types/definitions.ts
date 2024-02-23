@@ -27,9 +27,19 @@ interface Song{
     youtube_link:string
 }
 
+interface User{
+    uid:string,
+    photoURL:any,
+    email:any,
+    displayName:any,
+    phoneNumber:any,
+    emailVerified:boolean
+}
+
 export type{
     Event,
     Member,
     Project,
     Song,
+    User,
 }
