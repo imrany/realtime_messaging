@@ -4,7 +4,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdClose, MdMoreVert } from "react-icons/md";
 import { useEffect, useState, useContext } from "react";
 import { Song } from "../types/definitions";
-import { addDoc, collection, db, deleteDoc, doc, getDocs, onSnapshot } from "../firebaseConfig/config";
+import { addDoc, collection, db, deleteDoc, doc, getDocs } from "../firebaseConfig/config";
 import { err_toast } from "../components/Feedback";
 import { GlobalContext } from "../context";
 
@@ -28,10 +28,6 @@ export default function Songs() {
             youtube_link:"",
         }
     ])
-
-    const updateSong = onSnapshot(collection(db, "songs"), () => {
-        return "changed"
-    });
 
     async function fetchSongsFromFirebase(){
         try {
@@ -110,6 +106,7 @@ export default function Songs() {
                 checkedBoxArrayValues.map(async (checkedItem:string)=>{
                     await deleteDoc(doc(db,"songs",checkedItem))
                 })
+                fetchSongsFromFirebase()
                 header.innerHTML=`
                 <div class="flex items-center justify-between">
                     <p class="text-lg font-semibold">Team Ruiru Portal</p>
@@ -137,6 +134,7 @@ export default function Songs() {
                 youtube_link:e.target.youtube_link.value,
             }
             await addDoc(collection(db,"songs"),event);
+            fetchSongsFromFirebase()
             e.target.reset()
         } catch (error:any) {
             console.log(error)
@@ -146,7 +144,7 @@ export default function Songs() {
 
     useEffect(()=>{
         fetchSongsFromFirebase()
-    },[updateSong])
+    },[])
     return (
         <div className="p-10 flex gap-4 max-sm:flex-wrap">
             <div className="mt-8 flex-grow rounded-lg border-[1px] text-sm">

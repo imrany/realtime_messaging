@@ -4,7 +4,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdClose, MdMoreVert } from "react-icons/md";
 import { useEffect, useState, useContext } from "react";
 import { Event } from "../types/definitions";
-import { addDoc, collection, db, deleteDoc, doc, getDocs, onSnapshot } from "../firebaseConfig/config";
+import { addDoc, collection, db, deleteDoc, doc, getDocs } from "../firebaseConfig/config";
 import { err_toast } from "../components/Feedback";
 import { GlobalContext } from "../context";
 
@@ -59,10 +59,6 @@ export default function Events() {
         }
     ])
 
-    const updateEvent = onSnapshot(collection(db, "events"), () => {
-        return "changed"
-    });
-
     async function fetchEventsFromFirebase(){
         try {
             const querySnapshot=await getDocs(collection(db,"events"));
@@ -113,6 +109,7 @@ export default function Events() {
         }else{
             checkedBoxArrayValues.push(e.target.value)
         }
+
         header.innerHTML=`
             <div class="flex text-sm py-1 px-8 justify-between items-center">
               <div class="flex gap-1 items-center">
@@ -142,6 +139,7 @@ export default function Events() {
                 checkedBoxArrayValues.map(async (checkedItem:string)=>{
                     await deleteDoc(doc(db,"events",checkedItem))
                 })
+                fetchEventsFromFirebase()
                 header.innerHTML=`
                  <div class="flex items-center justify-between">
                     <p class="text-lg font-semibold">Team Ruiru Portal</p>
@@ -171,6 +169,7 @@ export default function Events() {
                 location,
             }
             await addDoc(collection(db,"events"),event);
+            fetchEventsFromFirebase()
             e.target.reset()
         } catch (error:any) {
             console.log(error)
@@ -180,7 +179,7 @@ export default function Events() {
 
     useEffect(()=>{
         fetchEventsFromFirebase()
-    },[updateEvent])
+    },[])
     return (
         <div className="p-10 flex gap-4 max-sm:flex-wrap">
             <div className="mt-8 flex-grow rounded-lg border-[1px] text-sm">

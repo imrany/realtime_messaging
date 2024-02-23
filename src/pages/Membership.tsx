@@ -4,7 +4,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdClose, MdMoreVert } from "react-icons/md";
 import { useEffect, useState, useContext } from "react";
 import { Member } from "../types/definitions";
-import { addDoc, collection, db, deleteDoc, doc, getDocs, onSnapshot } from "../firebaseConfig/config";
+import { addDoc, collection, db, deleteDoc, doc, getDocs } from "../firebaseConfig/config";
 import { err_toast } from "../components/Feedback";
 import { GlobalContext } from "../context";
 
@@ -31,9 +31,6 @@ export default function Membership() {
         }
     ])
 
-    const updateMember = onSnapshot(collection(db, "members"), () => {
-        return "changed"
-    });
 
     async function fetchMembersFromFirebase(){
         try {
@@ -114,6 +111,7 @@ export default function Membership() {
                 checkedBoxArrayValues.map(async (checkedItem:string)=>{
                     await deleteDoc(doc(db,"members",checkedItem))
                 })
+                fetchMembersFromFirebase()
                 header.innerHTML=`
                 <div class="flex items-center justify-between">
                     <p class="text-lg font-semibold">Team Ruiru Portal</p>
@@ -143,6 +141,7 @@ export default function Membership() {
                 telephone:e.target.telephone.value,
             }
             await addDoc(collection(db,"members"),event);
+            fetchMembersFromFirebase()
             e.target.reset()
         } catch (error:any) {
             console.log(error)
@@ -152,7 +151,7 @@ export default function Membership() {
 
     useEffect(()=>{
         fetchMembersFromFirebase()
-    },[updateMember])
+    },[])
     return (
         <div className="p-10 flex gap-4 max-sm:flex-wrap">
             <div className="mt-8 flex-grow rounded-lg border-[1px] text-sm">
