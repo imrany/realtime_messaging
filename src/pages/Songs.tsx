@@ -1,6 +1,8 @@
 import Select from "react-select"
 import { FaFileCsv, FaFilePdf, FaPlus } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { MdMoreVert } from "react-icons/md";
+
 let sort_options=[
   {
     label:"Ascending",
@@ -13,7 +15,7 @@ let sort_options=[
 ]
 
 export default function Songs() {
-    let schedules=[
+    let events=[
         {
             date:"03/12/2023",
             programme:"Community walk & Charity",
@@ -48,12 +50,68 @@ export default function Songs() {
     function handleSort(value:string){
         console.log(value)
     }
+
+    let checkedBoxArrayValues:string[]=[]
+    function checkedBoxHandler(e:any) {
+        let header:any=document.getElementById("header")
+        if(!e.target.checked){
+            const index = checkedBoxArrayValues.indexOf(e.target.value);
+            if (index > -1) { // only splice array when item is found
+                checkedBoxArrayValues.splice(index, 1); // 2nd parameter means remove one item only
+                if(checkedBoxArrayValues.length===0){
+                    let header:any=document.getElementById("header")
+                    header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+                    for (let i = 0; i < checkedBoxArrayValues.length; i++) {
+                        const value = checkedBoxArrayValues[i];
+                        let checkbox:any=document.getElementById(`checkbox_${value}`)
+                        checkbox.checked=false;
+                    }
+                }
+            }
+        }else{
+            checkedBoxArrayValues.push(e.target.value)
+        }
+        header.innerHTML=`
+            <div class="flex text-sm py-1 px-8 justify-between items-center">
+              <div class="flex gap-1 items-center">
+                <p class="w-5 h-5 cursor-pointer" id="toggleHeader">X</p>
+                <p>${checkedBoxArrayValues&&checkedBoxArrayValues.length} selected</p>
+              </div>
+              <button id="deleteCheckedItems" class="button border-[1px] border-gray-400 text-[var(--theme-blue)]">delete</button>
+           </div>
+        `
+        document.getElementById("toggleHeader")?.addEventListener("click",()=>{
+            header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+            for (let i = 0; i < checkedBoxArrayValues.length; i++) {
+                const value = checkedBoxArrayValues[i];
+                let checkbox:any=document.getElementById(`checkbox_${value}`)
+                checkbox.checked=false;
+            }
+            checkedBoxArrayValues=[]
+        })
+
+        document.getElementById("deleteCheckedItems")?.addEventListener("click",async()=>{
+            try{
+                checkedBoxArrayValues.map((checkedItem:string)=>{
+                  console.log(checkedItem)
+                })
+                header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+                for (let i = 0; i < checkedBoxArrayValues.length; i++) {
+                    const value = checkedBoxArrayValues[i];
+                    let checkbox:any=document.getElementById(`checkbox_${value}`)
+                    checkbox.checked=false;
+                }
+            }catch(error:any){
+                console.log(error.message)
+            }
+        })
+    }
     return (
         <div className="p-10">
             <div className="mt-8 w-full rounded-lg border-[1px] text-sm">
                 <div className="flex flex-col py-6 px-8 border-b-[1px]">
                     <div className="flex justify-between items-center">
-                        <p className="text-[20px] text-[var(--gray-heading)] font-semibold">Songs / Music</p>
+                        <p className="text-[20px] text-[var(--gray-heading)] font-semibold">songs / Music</p>
                         <button className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none px-6 py-2 items-center justify-center">
                             <FaPlus className="w-4 h-4 mr-1"/>
                             <span>Add a new song</span>
@@ -88,23 +146,27 @@ export default function Songs() {
                             <th className="text-left">
                                 <input type="checkbox" disabled className="w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                             </th> 
-                            <th className="text-left">Date</th>
-                            <th className="text-left">Programme</th>
-                            <th className="text-left">Location</th>
+                            <th className="text-left">Song Name</th>
+                            <th className="text-left">Youtube Link</th>
+                            <th className="text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
-                        {schedules.map((schedule,index)=>{
+                        {events.map((schedule,index)=>{
                             return(
-                                <tr title={`#${schedule.programme}`} key={index} className="text-[#64748B] hover:bg-slate-50 cursor-pointer">
+                                <tr title={`#${schedule.programme}`} key={index} className="text-[#64748B]">
                                     <td className="text-left">
                                     <div>
-                                        <input type="checkbox" className="w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
+                                        <input id={`checkbox_${schedule.programme}`} type="checkbox" value={schedule.programme} onChange={checkedBoxHandler} className="checkbox w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                                     </div>
                                     </td>
                                     <td className="text-left">{schedule.date}</td>
                                     <td className="text-left">{schedule.programme}</td>
-                                    <td className="text-left">{schedule.location}</td>
+                                    <td className="text-left" title="Actions">
+                                        <div className="rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer">
+                                            <MdMoreVert className="w-6 h-4"/>
+                                        </div>
+                                    </td>
                                 </tr>
                             )
                         })}
