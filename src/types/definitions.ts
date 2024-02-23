@@ -6,6 +6,14 @@ interface Event{
     location:string
 }
 
+interface Member{
+    id?:string,
+    name:string,
+    telephone:number,
+    id_number:number,
+    email:string
+}
 export type{
     Event,
+    Member,
 }
