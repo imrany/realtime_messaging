@@ -66,7 +66,7 @@ function Login() {
                 <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Sign in</button>
                 <div className="flex mt-5">
                     <p className="mr-3">{"Don't have an account"}</p>
-                    <p className="underline text-[var(--theme-blue)]">Contact an Admin</p>
+                    <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer" className="underline text-[var(--theme-blue)]">Contact an Admin</a>
                 </div>
                 <div className="mt-5 text-xs flex items-center gap-x-1 text-[var(--gray-text)]">
                     <FaInfoCircle className="w-5 h-5"/>
