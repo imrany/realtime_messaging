@@ -29,8 +29,24 @@ let location_options=[
     }
 ]
 
+let programme_options=[
+    {
+        label:"Community & Charity",
+        value:"Community & Charity"
+    },
+    {
+        label:"Community & Work",
+        value:"Community & Work"
+    },
+    {
+        label:"Charity & Help",
+        value:"Charity & Help"
+    }
+]
+
 export default function Events() {
     let [location,setLocation]=useState("")
+    let [programme,setProgramme]=useState("")
     let [showAddEventForm,setShowAddEventForm]=useState(false)
     let [events,setEvents]=useState<Event[]>([
         {
@@ -134,7 +150,7 @@ export default function Events() {
             let event:Event={
                 date:e.target.date.value,
                 project:e.target.project.value,
-                programme:e.target.programme.value,
+                programme,
                 location,
             }
             await addDoc(collection(db,"events"),event);
@@ -228,9 +244,16 @@ export default function Events() {
                         </button>
                     </div>
                     <form onSubmit={handleCreateEvent} className="flex mt-5 flex-col text-sm">
-                        <label className="mb-[8px] text-[#0f172a]" htmlFor="programme">Programme <span className="text-red-500">*</span></label>
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="programme">Programmes <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            <input id="programme" name="programme" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Charity work" required/>
+                            <Select
+                                id="programme"
+                                className="w-full focus:outline-[var(--theme-blue)] focus:outline-[1px]"
+                                placeholder="Choose a programme"
+                                options={programme_options}
+                                onChange={(e:any)=>setProgramme(e.value)}
+                                required
+                            />
                         </div>
                         <label className="mb-[8px] text-[#0f172a]" htmlFor="project"> Project name <span className="text-red-500">*</span></label>
                         <div className="pb-4">
@@ -245,9 +268,10 @@ export default function Events() {
                             <Select
                                 id="location"
                                 className="w-full focus:outline-[var(--theme-blue)] focus:outline-[1px]"
-                                placeholder="Location :"
+                                placeholder="Locations"
                                 options={location_options}
                                 onChange={(e:any)=>setLocation(e.value)}
+                                required
                             />
                         </div>
                         <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Submit</button>
