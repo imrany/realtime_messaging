@@ -85,7 +85,7 @@ function ChatRoom() {
         }
     }
 
-    async function handleDeleteText(id:string){
+    async function handleDeleteText(id?:string){
 	try{
 	  await deleteDoc(doc(db,"chats",id))
 	}catch(error:any){
