@@ -6,6 +6,9 @@ let useHotToast={
    },
    sucess:(msg:string,opt?:any)=>{
       return toast.success(msg,opt)
+   },
+   info:(msg:string,opt?:any)=>{
+      return toast.custom(msg,opt)
    }
 }
 
