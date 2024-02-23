@@ -36,10 +36,18 @@ interface User{
     emailVerified:boolean
 }
 
+interface Chat{
+    id?:string,
+    from:string,
+    message:string,
+    time:string,
+    today:string
+}
 export type{
     Event,
     Member,
     Project,
     Song,
     User,
+    Chat,
 }
