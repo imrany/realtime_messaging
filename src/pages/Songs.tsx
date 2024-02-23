@@ -2,10 +2,11 @@ import Select from "react-select"
 import { FaFileCsv, FaFilePdf, FaPlus } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdClose, MdMoreVert } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Song } from "../types/definitions";
 import { addDoc, collection, db, deleteDoc, doc, getDocs, onSnapshot } from "../firebaseConfig/config";
 import { err_toast } from "../components/Feedback";
+import { GlobalContext } from "../context";
 
 let sort_options=[
   {
@@ -19,6 +20,7 @@ let sort_options=[
 ]
 
 export default function Songs() {
+    const { email } =useContext(GlobalContext)
     let [showAddSongForm,setShowAddSongForm]=useState(false)
     let [songs,setSongs]=useState<Song[]>([
         {
@@ -63,7 +65,12 @@ export default function Songs() {
                 checkedBoxArrayValues.splice(index, 1); // 2nd parameter means remove one item only
                 if(checkedBoxArrayValues.length===0){
                     let header:any=document.getElementById("header")
-                    header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+                    header.innerHTML=`
+                    <div class="flex items-center justify-between">
+                        <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                        <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                    </div>
+                    `
                     for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                         const value = checkedBoxArrayValues[i];
                         let checkbox:any=document.getElementById(`checkbox_${value}`)
@@ -84,7 +91,12 @@ export default function Songs() {
            </div>
         `
         document.getElementById("toggleHeader")?.addEventListener("click",()=>{
-            header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+            header.innerHTML=`
+            <div class="flex items-center justify-between">
+                <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+            </div>
+            `
             for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                 const value = checkedBoxArrayValues[i];
                 let checkbox:any=document.getElementById(`checkbox_${value}`)
@@ -98,7 +110,12 @@ export default function Songs() {
                 checkedBoxArrayValues.map(async (checkedItem:string)=>{
                     await deleteDoc(doc(db,"songs",checkedItem))
                 })
-                header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+                header.innerHTML=`
+                <div class="flex items-center justify-between">
+                    <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                    <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                </div>
+                `
                 for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                     const value = checkedBoxArrayValues[i];
                     let checkbox:any=document.getElementById(`checkbox_${value}`)

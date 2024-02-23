@@ -67,7 +67,7 @@ function Login() {
                 <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Sign in</button>
                 <div className="flex mt-5">
                     <p className="mr-3">{"Don't have an account"}</p>
-                    <Link to="/register" className="underline text-[var(--theme-blue)]">Create an Account</Link>
+                    <p className="underline text-[var(--theme-blue)]">Contact an Admin</p>
                 </div>
                 <div className="mt-5 text-xs flex items-center gap-x-1 text-[var(--gray-text)]">
                     <FaInfoCircle className="w-5 h-5"/>

@@ -2,10 +2,11 @@ import Select from "react-select"
 import { FaFileCsv, FaFilePdf, FaPlus } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdClose, MdMoreVert } from "react-icons/md";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Event } from "../types/definitions";
 import { addDoc, collection, db, deleteDoc, doc, getDocs, onSnapshot } from "../firebaseConfig/config";
 import { err_toast } from "../components/Feedback";
+import { GlobalContext } from "../context";
 
 let sort_options=[
   {
@@ -45,6 +46,7 @@ let programme_options=[
 ]
 
 export default function Events() {
+    const { email } =useContext(GlobalContext)
     let [location,setLocation]=useState("")
     let [programme,setProgramme]=useState("")
     let [showAddEventForm,setShowAddEventForm]=useState(false)
@@ -95,7 +97,12 @@ export default function Events() {
                 checkedBoxArrayValues.splice(index, 1); // 2nd parameter means remove one item only
                 if(checkedBoxArrayValues.length===0){
                     let header:any=document.getElementById("header")
-                    header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+                    header.innerHTML=`
+                     <div class="flex items-center justify-between">
+                        <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                        <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                    </div>
+                    `
                     for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                         const value = checkedBoxArrayValues[i];
                         let checkbox:any=document.getElementById(`checkbox_${value}`)
@@ -116,7 +123,12 @@ export default function Events() {
            </div>
         `
         document.getElementById("toggleHeader")?.addEventListener("click",()=>{
-            header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+            header.innerHTML=`
+                <div class="flex items-center justify-between">
+                    <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                    <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                </div>
+            `
             for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                 const value = checkedBoxArrayValues[i];
                 let checkbox:any=document.getElementById(`checkbox_${value}`)
@@ -130,7 +142,12 @@ export default function Events() {
                 checkedBoxArrayValues.map(async (checkedItem:string)=>{
                     await deleteDoc(doc(db,"events",checkedItem))
                 })
-                header.innerHTML=`<p class="text-lg font-semibold">Team Ruiru Portal</p>`
+                header.innerHTML=`
+                 <div class="flex items-center justify-between">
+                    <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                    <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                </div>
+                `
                 for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                     const value = checkedBoxArrayValues[i];
                     let checkbox:any=document.getElementById(`checkbox_${value}`)
