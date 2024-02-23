@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react"
 import { FaEye, FaEyeSlash, FaInfoCircle } from "react-icons/fa";
 import { auth, signInWithEmailAndPassword } from "../firebaseConfig/config";
-import { err_toast } from "../components/Feedback";
+import { err_toast, success_toast } from "../components/Feedback";
 
 function Login() {
     let [eye_icon,setEye_icon]=useState(<FaEye className="h-5 w-5"/>);
@@ -30,6 +30,7 @@ function Login() {
             let userCredential=await signInWithEmailAndPassword(auth, userInput.email, userInput.password);
             const user = userCredential.user;
             console.log(user)
+            success_toast(`Sign in successfull`)
         } catch (error:any) {
             const errorCode = error.code;
             const errorMessage = error.message;
