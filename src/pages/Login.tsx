@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState } from "react"
 import { FaEye, FaEyeSlash, FaInfoCircle } from "react-icons/fa";
 import { auth, signInWithEmailAndPassword } from "../firebaseConfig/config";
