@@ -201,7 +201,7 @@ export default function Membership() {
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
-                        {members.map((member)=>{
+                        {members.length!==0?members.map((member)=>{
                             return(
                                 <tr title={`#${member.name}`} key={member.id} className="text-[#64748B]">
                                     <td className="text-left">
@@ -220,7 +220,12 @@ export default function Membership() {
                                     </td>
                                 </tr>
                             )
-                        })}
+                        }):(
+                            <tr className="flex text-sm h-[40vh] flex-col items-center justify-center">
+                                <p className="">No members yet</p>
+                                <button className="underline text-[var(--theme-blue)]" onClick={()=>setShowAddMemberForm(true)}>Add a member</button>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

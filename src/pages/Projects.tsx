@@ -197,7 +197,7 @@ export default function Projects() {
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
-                        {projects.map((project)=>{
+                        {projects.length!==0?projects.map((project)=>{
                             return(
                                 <tr title={`#${project.project}`} key={project.id} className="text-[#64748B]">
                                     <td className="text-left">
@@ -215,7 +215,12 @@ export default function Projects() {
                                     </td>
                                 </tr>
                             )
-                        })}
+                        }):(
+                            <tr className="flex text-sm h-[40vh] flex-col items-center justify-center">
+                                <p className="">No projects yet</p>
+                                <button className="underline text-[var(--theme-blue)]" onClick={()=>setShowAddProjectForm(true)}>Add a project</button>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>
