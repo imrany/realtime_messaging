@@ -62,9 +62,30 @@ export default function Songs() {
                 if(checkedBoxArrayValues.length===0){
                     let header:any=document.getElementById("header")
                     header.innerHTML=`
-                    <div class="flex items-center justify-between">
-                        <p class="text-lg font-semibold">Team Ruiru Portal</p>
-                        <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                    <div class="px-2 pt-1 flex items-center justify-between">
+                        <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                    </div>
+                    <div class="px-2 py-2 flex items-center justify-between ">
+                        <div class="flex gap-2 items-center">
+                            <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
+                            <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                        </div>
+                        <div class="flex gap-8 items-center">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
+                            <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+                        </div>
+        
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
+                            <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+                        </div>
+        
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
+                        </div>
+                        </div>
                     </div>
                     `
                     for (let i = 0; i < checkedBoxArrayValues.length; i++) {
@@ -88,9 +109,30 @@ export default function Songs() {
         `
         document.getElementById("toggleHeader")?.addEventListener("click",()=>{
             header.innerHTML=`
-            <div class="flex items-center justify-between">
-                <p class="text-lg font-semibold">Team Ruiru Portal</p>
-                <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+            <div class="px-2 pt-1 flex items-center justify-between">
+                <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+            </div>
+            <div class="px-2 py-2 flex items-center justify-between ">
+                <div class="flex gap-2 items-center">
+                    <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
+                    <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                </div>
+                <div class="flex gap-8 items-center">
+                <div class="flex flex-col justify-center">
+                    <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
+                    <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+                </div>
+
+                <div class="flex flex-col justify-center">
+                    <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
+                    <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+                </div>
+
+                <div class="flex flex-col justify-center">
+                    <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
+                    <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
+                </div>
+                </div>
             </div>
             `
             for (let i = 0; i < checkedBoxArrayValues.length; i++) {
@@ -108,9 +150,30 @@ export default function Songs() {
                 })
                 fetchSongsFromFirebase()
                 header.innerHTML=`
-                <div class="flex items-center justify-between">
-                    <p class="text-lg font-semibold">Team Ruiru Portal</p>
-                    <p class="text-sm ">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                <div class="px-2 pt-1 flex items-center justify-between">
+                    <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                </div>
+                <div class="px-2 py-2 flex items-center justify-between ">
+                    <div class="flex gap-2 items-center">
+                        <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
+                        <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                    </div>
+                    <div class="flex gap-8 items-center">
+                    <div class="flex flex-col justify-center">
+                        <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
+                        <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+                    </div>
+    
+                    <div class="flex flex-col justify-center">
+                        <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
+                        <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+                    </div>
+    
+                    <div class="flex flex-col justify-center">
+                        <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
+                    </div>
+                    </div>
                 </div>
                 `
                 for (let i = 0; i < checkedBoxArrayValues.length; i++) {
