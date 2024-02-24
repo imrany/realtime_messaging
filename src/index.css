@@ -46,7 +46,6 @@ th {
 
 .button {
   border-radius: 8px;
-  /* border: 1px solid transparent; */
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -60,4 +59,27 @@ th {
 .button:focus,
 .button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 10vw;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.show {display: block;}
+
+@media screen and (max-width:900px) {
+  .dropdown-content{
+    margin-left: -2vw;
+    min-width: 12vw;
+  }
 }
