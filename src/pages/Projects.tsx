@@ -1,7 +1,7 @@
 import Select from "react-select"
 import { FaFileCsv, FaFilePdf, FaPlus } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { MdClose, MdMoreVert } from "react-icons/md";
+import { MdClose, MdDelete, MdMoreVert } from "react-icons/md";
 import { useEffect, useState, useContext } from "react";
 import { Project } from "../types/definitions";
 import { addDoc, collection, db, deleteDoc, doc, getDocs } from "../firebaseConfig/config";
@@ -208,6 +208,11 @@ export default function Projects() {
         }
     }
 
+    function showDropdown(id:string){
+        let dropdown:any=document.getElementById(id)
+        dropdown.classList.toggle("show");
+    }
+
     useEffect(()=>{
         fetchProjectsFromFirebase()
     },[])
@@ -269,9 +274,21 @@ export default function Projects() {
                                     <td className="text-left">{project.project}</td>
                                     <td className="text-left">Ksh {project.member_contributions}</td>
                                     <td className="text-left">{project.account_for_payment}</td>
-                                    <td className="text-left" title="Actions">
-                                        <div className="rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer">
-                                            <MdMoreVert className="w-6 h-4"/>
+                                    <td className="text-left dropdown dropbtn" title="Actions">
+                                        <div onClick={()=>showDropdown(`myDropdown_${project.id}`)} className="dropbtn rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer">
+                                            <MdMoreVert className="w-6 h-4  dropbtn"/>
+                                        </div>
+                                        <div id={`myDropdown_${project.id}`} className="dropdown-content rounded-md flex flex-col text-black gap-2 py-1 bg-white">
+                                            <button 
+                                                className="flex w-full py-2 px-3 hover:bg-gray-200"
+                                                onClick={async ()=>{
+                                                    await deleteDoc(doc(db,"projects",`${project.id}`))
+                                                    fetchProjectsFromFirebase()
+                                                }} 
+                                            >
+                                                <span>Delete item</span>
+                                                <MdDelete title="Delete this text" className="ml-auto w-5 h-5"/>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
