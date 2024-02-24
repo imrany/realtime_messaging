@@ -11,13 +11,14 @@
 
   color: #213547;
   background-color: #ffffff;
+  font-size: 14px;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --theme-blue:#646cff;
+  --theme-blue:#366388;
   --theme-dark:#213547;
   --theme-gray:#f9f9f9;
   --hover-blue:#535bf2;
