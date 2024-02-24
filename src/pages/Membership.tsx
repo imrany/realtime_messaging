@@ -221,7 +221,7 @@ export default function Membership() {
         fetchMembersFromFirebase()
     },[])
     return (
-        <div className="p-10 flex gap-4 max-sm:flex-wrap">
+        <div className="min-h-[60vh] p-10 flex gap-4 max-sm:flex-wrap">
             <div className="mt-8 flex-grow rounded-lg border-[1px] text-sm">
                 <div className="flex flex-col py-6 px-8 border-b-[1px]">
                     <div className="flex justify-between items-center">

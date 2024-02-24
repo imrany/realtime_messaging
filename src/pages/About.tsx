@@ -2,7 +2,7 @@ import { FaBuilding, FaFacebook, FaPhone } from "react-icons/fa"
 import { FaLocationPin } from "react-icons/fa6";
 function About() {
     return (
-        <div className="flex flex-col p-10">
+        <div className="flex flex-col p-10 min-h-[60vh]">
 			<div>
 				<p className="text-3xl font-semibold">About Us</p>
 				<p>The purpose of this website is to assist in reaching out team Ruiru members and ensuring the growth of the team.</p> 

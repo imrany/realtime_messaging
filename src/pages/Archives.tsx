@@ -23,7 +23,7 @@ function Archives() {
         }
     ]
     return (
-        <div>
+        <div className="min-h-[60vh]">
             <div className="sm:p-10 max-sm:p-8">
                 <div className="grid grid-cols-4 max-md:grid-cols-3 max-sm:grid-cols-1 gap-6">
                     {archives.map((archive,index)=>(

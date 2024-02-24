@@ -1,6 +1,6 @@
 function Important() {
     return (
-        <div className="flex flex-col p-10">
+        <div className="flex flex-col p-10 min-h-[60vh]">
 			<div>
 				<p className="text-3xl font-semibold">Our Background</p>
 				<p>Team Ruiru is an empower intitive group that was founded by a small group at Ruiri in December, 2019.</p> 
