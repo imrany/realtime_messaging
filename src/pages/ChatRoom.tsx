@@ -8,6 +8,7 @@ import { err_toast } from "../components/Feedback";
 function ChatRoom() {
     const { email } =useContext(GlobalContext)
     const [showAddReplyForm,setShowAddReplyForm]=useState(false)
+    const [showChats,setShowChats]=useState(true)
     const [chats,setChats]=useState<Chat[]>([
         {
             from:"",
@@ -86,19 +87,26 @@ function ChatRoom() {
     }
 
     async function handleDeleteText(id:any){
-	try{
-	  await deleteDoc(doc(db,"chats",id))
-	}catch(error:any){
-	 console.log(error.message)
-	}
+        try{
+            await deleteDoc(doc(db,"chats",id))
+        }catch(error:any){
+            console.log(error.message)
+        }
     }
 
+    window.onresize=function(){
+        if(screen.width<768){
+            setShowChats(false)
+        }else{
+            setShowChats(true)
+        }
+    }
     useEffect(()=>{
         fetchChatsFromFirebase()
     },[updateChats])
     return (
         <div className="p-10 flex gap-4 max-sm:flex-wrap min-h-[50vh]">
-            <div className="flex-grow border-r-[2px] pr-3 border-dotted">
+            {showChats?(<div className="flex-grow border-r-[2px] pr-3 border-dotted">
                 <div className="flex flex-col overflow-y-auto h-[65vh] gap-6 text-sm mb-8">
                     {chats.length!==0?chats.map((chat)=>{
                         return(
@@ -118,23 +126,48 @@ function ChatRoom() {
                     }):(
                         <tr className="flex h-full text-sm gap-2 items-center justify-center">
                             <p className="">No chats yet</p>
-                            <button className="underline text-[var(--theme-blue)]" onClick={()=>setShowAddReplyForm(true)}>Start chatting</button>
+                            <button 
+                                className="underline text-[var(--theme-blue)]" 
+                                onClick={()=>{
+                                    setShowAddReplyForm(true)
+                                    if(screen.width<768){
+                                        setShowChats(false)
+                                    }
+                                }}
+                            >
+                                Start chatting
+                            </button>
                         </tr>
                     )}
                 </div>
                 {!showAddReplyForm&&chats.length!==0?(
-                    <button className="underline text-[var(--theme-blue)] flex items-center" onClick={()=>setShowAddReplyForm(true)}>
+                    <button 
+                        className="underline text-[var(--theme-blue)] flex items-center" 
+                        onClick={()=>{
+                            setShowAddReplyForm(true)
+                            if(screen.width<768){
+                                setShowChats(false)
+                            }
+                        }}
+                    >
                         <span>Reply</span>
                         <MdChevronRight className="w-4 h-4"/>
                     </button>
                 ):""}
-            </div>
+            </div>):""}
             {showAddReplyForm?(
-                <div className="h-[65vh] flex flex-col justify-center w-[25vw]">
-                    <div className="border-[1px] text-sm p-4 rounded-lg">
+                <div className="h-[65vh] flex flex-col justify-center max-md:w-[90vw] w-[50vw] lg:w-[25vw]">
+                    <div className="md:border-[1px] text-sm md:p-4 rounded-lg">
                         <div className="flex justify-between items-center ">
                             <p className="text-[20px] font-semibold">Chat Room</p>
-                            <button title="close" onClick={()=>setShowAddReplyForm(false)}>
+                            <button title="close" 
+                                onClick={()=>{
+                                    setShowAddReplyForm(false)
+                                    if(screen.width<768){
+                                        setShowChats(true)
+                                    }
+                                }}
+                            >
                                 <MdClose className="w-5 h-5"/>
                             </button>
                         </div>

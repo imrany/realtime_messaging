@@ -1,18 +1,22 @@
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { auth, signOut } from "../firebaseConfig/config"
 import Footer from "../components/Footer";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../context";
+import { MdClose, MdMenu } from "react-icons/md";
+import { err_toast, success_toast } from "../components/Feedback";
 
 export default function Layout(){
-  const { email } =useContext(GlobalContext)
+  const { email } =useContext(GlobalContext);
+  let [showMobileSidebar, setShowMobileSidebar]=useState(false)
   const location=useLocation()
   async function logout(){
     try{
       await signOut(auth);
-      console.log("Successfull sign out")
+      success_toast(`Successfull sign out`)
     }catch(error:any){
       console.log(error)
+      err_toast(error.message)
     }
   }
 
@@ -105,7 +109,7 @@ export default function Layout(){
   },[location.pathname])
   return (
     <>
-      <nav className="border-b-[1px] shadow-sm">
+      <nav className="md-nav border-b-[1px] shadow-sm">
         <div className="" id="header">
           <div className="px-2 pt-1 flex items-center justify-between">
             <p className="text-sm ml-auto">Logged in as <span className="underline text-[var(--theme-blue)]">{email}</span></p>
@@ -139,6 +143,38 @@ export default function Layout(){
         </div>
       </nav>
 
+      <nav className="max-md-nav bg-[var(--theme-blue)] text-white shadow-sm">
+        <div className="" id="header">
+          <div className="px-2 py-2 flex items-center justify-between ">
+            <div className="flex gap-2 items-center">
+              <img src="/uni_logo.png" alt="ruiru logo" width={25} height={25}/>
+              <p className="text-base font-semibold">Team Ruiru Portal</p>
+            </div>
+            <button
+              onClick={()=>setShowMobileSidebar(true)}
+              className="rounded-md p-1 border-[1px]"
+            >
+              <MdMenu className="w-5 h-5"/>
+            </button>
+          </div>
+        </div>
+      </nav>
+      {showMobileSidebar===true?(
+        <div id="mobile-sidebar" className="max-md-nav py-6 bg-white z-10 fixed top-0 bottom-0 left-0 right-0 h-[100vh]">
+          <div className="flex flex-col">
+            <div className="flex items-center px-5">
+              <button onClick={()=>setShowMobileSidebar(false)} className="ml-auto">
+                <MdClose className="w-7 h-7"/>
+              </button>
+            </div>
+
+            <div className="flex flex-col">
+              {links.map((link,index)=>(<Link to={link.to} className={location.pathname===link.to?"px-9 py-4 bg-white text-[#213547]":"px-9 py-4 hover:bg-slate-200 hover:text-[#213547]"} onClick={()=>setShowMobileSidebar(false)} key={index}>{link.name}</Link>))}
+              <button onClick={logout} className="px-9 py-4 text-left text-[#213547]">Log out</button>
+            </div>
+          </div>
+        </div>
+      ):""}
       <Outlet />
       <Footer/>
     </>

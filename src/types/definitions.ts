@@ -10,7 +10,6 @@ interface Member{
     id?:string,
     name:string,
     telephone:number,
-    id_number:number,
     email:string
 }
 

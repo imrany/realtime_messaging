@@ -19,34 +19,35 @@ let sort_options=[
   }
 ]
 
-let location_options=[
-    {
-      label:"Ruiru, Nairobi",
-      value:"Ruiru, Nairobi"
-    },
-    {
-      label:"Karen, Nairobi",
-      value:"Karen, Nairobi"
-    }
-]
+// let location_options=[
+//     {
+//       label:"Ruiru, Nairobi",
+//       value:"Ruiru, Nairobi"
+//     },
+//     {
+//       label:"Karen, Nairobi",
+//       value:"Karen, Nairobi"
+//     }
+// ]
 
-let programme_options=[
-    {
-        label:"Community & Charity",
-        value:"Community & Charity"
-    },
-    {
-        label:"Community & Work",
-        value:"Community & Work"
-    },
-    {
-        label:"Charity & Help",
-        value:"Charity & Help"
-    }
-]
+// let programme_options=[
+//     {
+//         label:"Community & Charity",
+//         value:"Community & Charity"
+//     },
+//     {
+//         label:"Community & Work",
+//         value:"Community & Work"
+//     },
+//     {
+//         label:"Charity & Help",
+//         value:"Charity & Help"
+//     }
+// ]
 
 export default function Events() {
     const { email } =useContext(GlobalContext)
+    let [showTable,setShowTable]=useState(true);
     let [location,setLocation]=useState("")
     let [programme,setProgramme]=useState("")
     let [showAddEventForm,setShowAddEventForm]=useState(false)
@@ -245,24 +246,38 @@ export default function Events() {
         dropdown.classList.toggle("show");
     }
 
+    let md_screen:boolean=screen.width>930||screen.width===930?true:false;
+    window.onresize=function(){
+        md_screen=screen.width>930||screen.width===930?true:false
+        if(showAddEventForm){
+            setShowTable(md_screen)
+        }
+    }
+
     useEffect(()=>{
         fetchEventsFromFirebase()
     },[])
     return (
-        <div className="min-h-[60vh] p-10 flex gap-4 max-sm:flex-wrap">
-            <div className="mt-8 flex-grow rounded-lg border-[1px] text-sm">
-                <div className="flex flex-col py-6 px-8 border-b-[1px]">
+        <div className={md_screen===false?"min-h-[60vh] md:p-10 max-md:py-10 justify-center flex gap-4 max-sm:flex-wrap":"min-h-[60vh] md:p-10 max-md:py-10 flex gap-4 max-sm:flex-wrap"}>
+            {showTable?(<div className="mt-8 flex-grow rounded-lg md:border-[1px] text-sm">
+                <div className="flex flex-col py-6 px-8 max-md:px-4 border-b-[1px]">
                     <div className="flex justify-between items-center">
                         <p className="text-[20px] text-[var(--gray-heading)] font-semibold">Events</p>
-                        <button onClick={()=>setShowAddEventForm(true)} className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none px-6 py-2 items-center justify-center">
+                        <button 
+                            onClick={()=>{
+                                setShowAddEventForm(true)
+                                setShowTable(md_screen)
+                            }} 
+                            className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none max-md:px-3 px-6 py-2 items-center justify-center"
+                        >
                             <FaPlus className="w-4 h-4 mr-1"/>
                             <span>Add a new event</span>
                         </button>
                     </div>
-                    <div className="flex justify-between items-center pt-5">
+                    <div className={md_screen===true?"flex justify-between items-center pt-5":" none"}>
                         <form className="flex font-medium relative text-[var(--gray-heading)]">
                             <FaMagnifyingGlass className="absolute text-[var(--gray-text)] start-4 my-2 w-4 h-4"/>
-                            <input id="search" required name="search" type="text" className={`items-center focus:border-[var(--theme-blue)] active:outline-[1px] focus:outline-[1px] bg-white border-[1px] rounded-md placeholder:text-[var(--gray-text)] pl-11  pr-[18px] w-full py-2 focus:outline-none`} placeholder="Search..."/>
+                            <input id="search" required name="search" type="text" className={`items-center focus:border-[var(--theme-blue)] active:outline-[1px] focus:outline-[1px] bg-white border-[1px] rounded-md placeholder:text-[var(--gray-text)] pl-11  pr-[18px] w-full max-md:w-[150px] py-2 focus:outline-none`} placeholder="Search..."/>
                         </form>
                         <div className="flex gap-3 font-semibold text-slate-700">
                             <Select
@@ -291,8 +306,8 @@ export default function Events() {
                             <th className="text-left">Date</th>
                             <th className="text-left">Programme</th>
                             <th className="text-left">Project</th>
-                            <th className="text-left">Location</th>
-                            <th className="text-left">Actions</th>
+                            <th className="text-left">Venue</th>
+                            {md_screen===true?<th className="text-left">Actions</th>:""}
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
@@ -300,16 +315,17 @@ export default function Events() {
                             return(
                                 <tr title={`#${event.programme}`} key={event.id} className="text-[#64748B]">
                                     <td className="text-left">
-                                    <div>
                                         <input id={`checkbox_${event.id}`} type="checkbox" value={event.id} onChange={checkedBoxHandler} className="checkbox w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
-                                    </div>
                                     </td>
                                     <td className="text-left">{event.date}</td>
                                     <td className="text-left">{event.programme}</td>
                                     <td className="text-left">{event.project}</td>
                                     <td className="text-left">{event.location}</td>
-                                    <td className="text-left dropdown dropbtn" title="Actions">
-                                        <div onClick={()=>showDropdown(`myDropdown_${event.id}`)} className="dropbtn rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer">
+                                    {md_screen===true?<td className="text-left dropdown dropbtn" title="Actions">
+                                        <div 
+                                            onClick={()=>showDropdown(`myDropdown_${event.id}`)} 
+                                            className="dropbtn rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer"
+                                        >
                                             <MdMoreVert className="w-6 h-4  dropbtn"/>
                                         </div>
                                         <div id={`myDropdown_${event.id}`} className="dropdown-content rounded-md flex flex-col text-black gap-2 py-1 bg-white">
@@ -324,32 +340,41 @@ export default function Events() {
                                                 <MdDelete title="Delete this text" className="ml-auto w-5 h-5"/>
                                             </button>
                                         </div>
-                                    </td>
+                                    </td>:""}
                                 </tr>
                             )
                         })}
                     </tbody>
                 </table>
-            </div>
+            </div>):""}
             {showAddEventForm?(
-                <div className="mt-8 h-fit rounded-lg border-[1px] text-sm p-4 w-[25vw]">
+                <div className="mt-8 h-fit rounded-lg border-[1px] text-sm p-4 max-sm:w-[90vw] w-[50vw] lg:w-[25vw]">
                     <div className="flex justify-between items-center">
                         <p className="text-[20px] font-semibold">Add a new event</p>
-                        <button title="close" onClick={()=>setShowAddEventForm(false)}>
+                        <button 
+                            title="close" 
+                            onClick={()=>{
+                                setShowAddEventForm(false)
+                                if(md_screen===false){
+                                    setShowTable(!md_screen)
+                                }
+                            }}
+                        >
                             <MdClose className="w-5 h-5"/>
                         </button>
                     </div>
                     <form onSubmit={handleCreateEvent} className="flex mt-5 flex-col text-sm">
                         <label className="mb-[8px] text-[#0f172a]" htmlFor="programme">Programmes <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            <Select
+                            {/* <Select
                                 id="programme"
                                 className="w-full focus:outline-[var(--theme-blue)] focus:outline-[1px]"
                                 placeholder="Choose a programme"
                                 options={programme_options}
                                 onChange={(e:any)=>setProgramme(e.value)}
                                 required
-                            />
+                            /> */}
+                            <input id="programme"  onChange={(e:any)=>setProgramme(e.value)} name="programme" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter programme" required/>
                         </div>
                         <label className="mb-[8px] text-[#0f172a]" htmlFor="project"> Project name <span className="text-red-500">*</span></label>
                         <div className="pb-4">
@@ -359,16 +384,17 @@ export default function Events() {
                         <div className="pb-4">
                             <input id="date" name="date" type="date" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Visiting the poor" required/>
                         </div>
-                        <label className="mb-[8px] text-[#0f172a]" htmlFor="location"> Choose Location <span className="text-red-500">*</span></label>
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="location"> Venue <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            <Select
+                            {/* <Select
                                 id="location"
                                 className="w-full focus:outline-[var(--theme-blue)] focus:outline-[1px]"
                                 placeholder="Locations"
                                 options={location_options}
                                 onChange={(e:any)=>setLocation(e.value)}
                                 required
-                            />
+                            /> */}
+                            <input id="location" onChange={(e:any)=>setLocation(e.value)} name="location" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter venue" required/>
                         </div>
                         <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Submit</button>
                     </form>

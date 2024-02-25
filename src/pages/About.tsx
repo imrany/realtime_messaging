@@ -4,7 +4,7 @@ function About() {
     return (
         <div className="flex flex-col p-10 min-h-[60vh]">
 			<div>
-				<p className="text-3xl font-semibold">About Us</p>
+				<p className="text-3xl max-md:text-2xl font-semibold">About Us</p>
 				<p>The purpose of this website is to assist in reaching out team Ruiru members and ensuring the growth of the team.</p> 
 				<p> It will enable easy follow up of contributions, members well being, spiritual growth and bonding.</p> 
 			</div>

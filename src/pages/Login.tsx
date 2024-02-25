@@ -38,7 +38,7 @@ function Login() {
         }
     }
     return (
-        <main className="flex h-screen flex-col items-center p-4">
+        <main className="flex md:h-screen max-md:h-[85vh] max-md:justify-center flex-col items-center md:p-4">
             <div className="flex flex-col sm:w-[440px] max-sm:w-[85vw]">
                 <div className="sm:my-[40px] max-sm:my-[20px]">
                 <p className="text-[30px] text-[#1e293b] mb-[8px] font-semibold">Sign in</p>

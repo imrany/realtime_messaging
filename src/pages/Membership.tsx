@@ -4,7 +4,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { MdClose, MdDelete, MdMoreVert } from "react-icons/md";
 import { useEffect, useState, useContext } from "react";
 import { Member } from "../types/definitions";
-import { addDoc, collection, db, deleteDoc, doc, getDocs } from "../firebaseConfig/config";
+import { addDoc, auth, collection, createUserWithEmailAndPassword, db, deleteDoc, doc, getDocs } from "../firebaseConfig/config";
 import { err_toast } from "../components/Feedback";
 import { GlobalContext } from "../context";
 
@@ -19,20 +19,20 @@ let sort_options=[
   }
 ]
 
-export default function Membership() {
+
+export default function Members() {
     const { email } =useContext(GlobalContext)
+    let [showTable,setShowTable]=useState(true);
     let [showAddMemberForm,setShowAddMemberForm]=useState(false)
     let [members,setMembers]=useState<Member[]>([
         {
             name:"",
             email:"",
-            id_number:0,
             telephone:0
         }
     ])
 
-
-    async function fetchMembersFromFirebase(){
+    async function fetchMemberFromFirebase(){
         try {
             const querySnapshot=await getDocs(collection(db,"members"));
             let list:Member[]=[]
@@ -41,8 +41,7 @@ export default function Membership() {
                     id:doc.id,
                     name:doc.data().name,
                     email:doc.data().email,
-                    id_number:doc.data().id_number,
-                    telephone:doc.data().telephone
+                    telephone:doc.data().telephone,
                 }
                 list.push(data)
             });
@@ -80,12 +79,12 @@ export default function Membership() {
                             <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
                             <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
                         </div>
-        
+            
                         <div class="flex flex-col justify-center">
                             <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
                             <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
                         </div>
-        
+            
                         <div class="flex flex-col justify-center">
                             <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
                             <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
@@ -103,6 +102,7 @@ export default function Membership() {
         }else{
             checkedBoxArrayValues.push(e.target.value)
         }
+
         header.innerHTML=`
             <div class="flex text-sm py-1 px-8 justify-between items-center">
               <div class="flex gap-1 items-center">
@@ -152,34 +152,35 @@ export default function Membership() {
             try{
                 checkedBoxArrayValues.map(async (checkedItem:string)=>{
                     await deleteDoc(doc(db,"members",checkedItem))
+                    // await deleteUser(checkedItem)
                 })
-                fetchMembersFromFirebase()
+                fetchMemberFromFirebase()
                 header.innerHTML=`
-                <div class="px-2 pt-1 flex items-center justify-between">
-                    <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
-                </div>
-                <div class="px-2 py-2 flex items-center justify-between ">
-                    <div class="flex gap-2 items-center">
+                    <div class="px-2 pt-1 flex items-center justify-between">
+                        <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                    </div>
+                    <div class="px-2 py-2 flex items-center justify-between ">
+                        <div class="flex gap-2 items-center">
                         <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
                         <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                        </div>
+                        <div class="flex gap-8 items-center">
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
+                            <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+                        </div>
+            
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
+                            <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+                        </div>
+            
+                        <div class="flex flex-col justify-center">
+                            <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
+                            <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
+                        </div>
+                        </div>
                     </div>
-                    <div class="flex gap-8 items-center">
-                    <div class="flex flex-col justify-center">
-                        <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
-                        <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
-                    </div>
-    
-                    <div class="flex flex-col justify-center">
-                        <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
-                        <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
-                    </div>
-    
-                    <div class="flex flex-col justify-center">
-                        <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
-                        <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
-                    </div>
-                    </div>
-                </div>
                 `
                 for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                     const value = checkedBoxArrayValues[i];
@@ -194,17 +195,17 @@ export default function Membership() {
         document.getElementById("deleteCheckedItems")?.addEventListener("click",deleteEvent)
     }
 
-    async function handleCreateMember(e:any) {
+    async function handleCreateMemeber(e:any) {
         try {
             e.preventDefault()
-            let event:Member={
-                id_number:e.target.id_number.value,
-                email:e.target.email.value,
+            let member:Member={
                 name:e.target.name.value,
                 telephone:e.target.telephone.value,
+                email:e.target.email.value,
             }
-            await addDoc(collection(db,"members"),event);
-            fetchMembersFromFirebase()
+            await addDoc(collection(db,"members"),member);
+            await createUserWithEmailAndPassword(auth, member.email, `${member.telephone}`);
+            fetchMemberFromFirebase()
             e.target.reset()
         } catch (error:any) {
             console.log(error)
@@ -217,24 +218,38 @@ export default function Membership() {
         dropdown.classList.toggle("show");
     }
 
+    let md_screen:boolean=screen.width>930||screen.width===930?true:false;
+    window.onresize=function(){
+        md_screen=screen.width>930||screen.width===930?true:false
+        if(showAddMemberForm){
+            setShowTable(md_screen)
+        }
+    }
+
     useEffect(()=>{
-        fetchMembersFromFirebase()
+        fetchMemberFromFirebase()
     },[])
     return (
-        <div className="min-h-[60vh] p-10 flex gap-4 max-sm:flex-wrap">
-            <div className="mt-8 flex-grow rounded-lg border-[1px] text-sm">
-                <div className="flex flex-col py-6 px-8 border-b-[1px]">
+        <div className={md_screen===false?"min-h-[60vh] md:p-10 max-md:py-10 justify-center flex gap-4 max-sm:flex-wrap":"min-h-[60vh] md:p-10 max-md:py-10 flex gap-4 max-sm:flex-wrap"}>
+            {showTable?(<div className="mt-8 flex-grow rounded-lg md:border-[1px] text-sm">
+                <div className="flex flex-col py-6 px-8 max-md:px-4 border-b-[1px]">
                     <div className="flex justify-between items-center">
                         <p className="text-[20px] text-[var(--gray-heading)] font-semibold">Members</p>
-                        <button onClick={()=>setShowAddMemberForm(true)} className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none px-6 py-2 items-center justify-center">
+                        <button 
+                            onClick={()=>{
+                                setShowAddMemberForm(true)
+                                setShowTable(md_screen)
+                            }} 
+                            className="bg-[var(--theme-blue)] text-white flex rounded-md outline-none max-md:px-3 px-6 py-2 items-center justify-center"
+                        >
                             <FaPlus className="w-4 h-4 mr-1"/>
                             <span>Add a new member</span>
                         </button>
                     </div>
-                    <div className="flex justify-between items-center pt-5">
+                    <div className={md_screen===true?"flex justify-between items-center pt-5":" none"}>
                         <form className="flex font-medium relative text-[var(--gray-heading)]">
                             <FaMagnifyingGlass className="absolute text-[var(--gray-text)] start-4 my-2 w-4 h-4"/>
-                            <input id="search" required name="search" type="text" className={`items-center focus:border-[var(--theme-blue)] active:outline-[1px] focus:outline-[1px] bg-white border-[1px] rounded-md placeholder:text-[var(--gray-text)] pl-11  pr-[18px] w-full py-2 focus:outline-none`} placeholder="Search..."/>
+                            <input id="search" required name="search" type="text" className={`items-center focus:border-[var(--theme-blue)] active:outline-[1px] focus:outline-[1px] bg-white border-[1px] rounded-md placeholder:text-[var(--gray-text)] pl-11  pr-[18px] w-full max-md:w-[150px] py-2 focus:outline-none`} placeholder="Search..."/>
                         </form>
                         <div className="flex gap-3 font-semibold text-slate-700">
                             <Select
@@ -262,33 +277,32 @@ export default function Membership() {
                             </th> 
                             <th className="text-left">Name</th>
                             <th className="text-left">Telephone</th>
-                            <th className="text-left">ID Number</th>
-                            <th className="text-left">Email</th>
-                            <th className="text-left">Actions</th>
+                            <th className="text-left">email</th>
+                            {md_screen===true?<th className="text-left">Actions</th>:""}
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
-                        {members.length!==0?members.map((member)=>{
+                        {members.map((member)=>{
                             return(
                                 <tr title={`#${member.name}`} key={member.id} className="text-[#64748B]">
                                     <td className="text-left">
-                                    <div>
                                         <input id={`checkbox_${member.id}`} type="checkbox" value={member.id} onChange={checkedBoxHandler} className="checkbox w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
-                                    </div>
                                     </td>
-                                    <td className="text-left">{member.name}</td>
+                                    <td className="text-left capitalize">{member.name}</td>
                                     <td className="text-left">{member.telephone}</td>
-                                    <td className="text-left">{member.id_number}</td>
-                                    <td className="text-left">{member.telephone}</td>
-                                    <td className="text-left dropdown dropbtn" title="Actions">
-                                        <div onClick={()=>showDropdown(`myDropdown_${member.id}`)} className="dropbtn rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer">
+                                    <td className="text-left">{member.email.slice(0,7)}...{member.email.slice(member.email.length-9,member.email.length)}</td>
+                                    {md_screen===true?<td className="text-left dropdown dropbtn" title="Actions">
+                                        <div 
+                                            onClick={()=>showDropdown(`myDropdown_${member.id}`)} 
+                                            className="dropbtn rounded-[100px] py-3 px-2 w-fit hover:shadow-md hover:bg-gray-100 cursor-pointer"
+                                        >
                                             <MdMoreVert className="w-6 h-4  dropbtn"/>
                                         </div>
                                         <div id={`myDropdown_${member.id}`} className="dropdown-content rounded-md flex flex-col text-black gap-2 py-1 bg-white">
                                             <button 
                                                 onClick={async ()=>{
                                                     await deleteDoc(doc(db,"members",`${member.id}`))
-                                                    fetchMembersFromFirebase()
+                                                    fetchMemberFromFirebase()
                                                 }} 
                                                 className="flex w-full py-2 px-3 hover:bg-gray-200"
                                             >
@@ -296,42 +310,41 @@ export default function Membership() {
                                                 <MdDelete title="Delete this text" className="ml-auto w-5 h-5"/>
                                             </button>
                                         </div>
-                                    </td>
+                                    </td>:""}
                                 </tr>
                             )
-                        }):(
-                            <tr className="flex text-sm h-[40vh] flex-col items-center justify-center">
-                                <p className="">No members yet</p>
-                                <button className="underline text-[var(--theme-blue)]" onClick={()=>setShowAddMemberForm(true)}>Add a member</button>
-                            </tr>
-                        )}
+                        })}
                     </tbody>
                 </table>
-            </div>
+            </div>):""}
             {showAddMemberForm?(
-                <div className="mt-8 h-fit rounded-lg border-[1px] text-sm p-4 w-[25vw]">
+                <div className="mt-8 h-fit rounded-lg border-[1px] text-sm p-4 max-sm:w-[90vw] w-[50vw] lg:w-[25vw]">
                     <div className="flex justify-between items-center">
                         <p className="text-[20px] font-semibold">Add a new member</p>
-                        <button title="close" onClick={()=>setShowAddMemberForm(false)}>
+                        <button 
+                            title="close" 
+                            onClick={()=>{
+                                setShowAddMemberForm(false)
+                                if(md_screen===false){
+                                    setShowTable(!md_screen)
+                                }
+                            }}
+                        >
                             <MdClose className="w-5 h-5"/>
                         </button>
                     </div>
-                    <form onSubmit={handleCreateMember} className="flex mt-5 flex-col text-sm">
-                        <label className="mb-[8px] text-[#0f172a]" htmlFor="name"> Full Name <span className="text-red-500">*</span></label>
+                    <form onSubmit={handleCreateMemeber} className="flex mt-5 flex-col text-sm">
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="name">Full Name <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            <input id="name" name="name" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="John Doe" required/>
-                        </div>
-                        <label className="mb-[8px] text-[#0f172a]" htmlFor="id_number"> ID Number <span className="text-red-500">*</span></label>
-                        <div className="pb-4">
-                            <input id="id_number" name="id_number" type="number" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} required/>
+                            <input id="name" name="name" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter name" required/>
                         </div>
                         <label className="mb-[8px] text-[#0f172a]" htmlFor="email"> Email <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            <input id="email" name="email" type="email" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="johndoe@gmail.com" required/>
+                            <input id="email" name="email" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter email" required/>
                         </div>
                         <label className="mb-[8px] text-[#0f172a]" htmlFor="telephone"> Telephone Number <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            <input id="telephone" name="telephone" type="tel" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="254734XXXXXX" required/>
+                            <input id="telephone" name="telephone" type="tel" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="2547XXXXXXXX" required/>
                         </div>
                         <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Submit</button>
                     </form>
