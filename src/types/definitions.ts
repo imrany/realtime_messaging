@@ -1,8 +1,9 @@
 interface Event{
     id?:string,
+    event:string,
     date:string,
-    project:string,
-    programme:string,
+    participants:string,
+    remarks:string,
     location:string
 }
 

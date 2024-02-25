@@ -200,6 +200,10 @@ export default function Songs() {
             }
             await addDoc(collection(db,"songs"),member);
             fetchSongsFromFirebase()
+            if(md_screen===false){
+                setShowTable(!md_screen)
+                setShowAddSongForm(false)
+            }
             e.target.reset()
         } catch (error:any) {
             console.log(error)

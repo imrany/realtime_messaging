@@ -9,6 +9,7 @@ function ChatRoom() {
     const { email } =useContext(GlobalContext)
     const [showAddReplyForm,setShowAddReplyForm]=useState(false)
     const [showChats,setShowChats]=useState(true)
+    let md_screen:boolean=screen.width>930||screen.width===930?true:false;
     const [chats,setChats]=useState<Chat[]>([
         {
             from:"",
@@ -59,6 +60,10 @@ function ChatRoom() {
                 today
             }
             await addDoc(collection(db,"chats"),message);
+            if(md_screen===false){
+                setShowChats(!md_screen)
+                setShowAddReplyForm(false)
+            }
             e.target.reset()
         }catch(error:any){
             console.log(error)

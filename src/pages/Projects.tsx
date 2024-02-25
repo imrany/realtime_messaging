@@ -204,6 +204,10 @@ export default function projects() {
             }
             await addDoc(collection(db,"projects"),member);
             fetchProjectsFromFirebase()
+            if(md_screen===false){
+                setShowTable(!md_screen)
+                setShowAddProjectForm(false)
+            }
             e.target.reset()
         } catch (error:any) {
             console.log(error)

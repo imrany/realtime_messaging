@@ -19,42 +19,29 @@ let sort_options=[
   }
 ]
 
-// let location_options=[
-//     {
-//       label:"Ruiru, Nairobi",
-//       value:"Ruiru, Nairobi"
-//     },
-//     {
-//       label:"Karen, Nairobi",
-//       value:"Karen, Nairobi"
-//     }
-// ]
-
-// let programme_options=[
-//     {
-//         label:"Community & Charity",
-//         value:"Community & Charity"
-//     },
-//     {
-//         label:"Community & Work",
-//         value:"Community & Work"
-//     },
-//     {
-//         label:"Charity & Help",
-//         value:"Charity & Help"
-//     }
-// ]
+let participants_options=[
+    {
+      label:"Team ruiru",
+      value:"Team ruiru"
+    },
+    {
+      label:"Nairobi region",
+      value:"Nairobi region"
+    }
+]
 
 export default function Events() {
     const { email } =useContext(GlobalContext)
+    let [disableSubmitBtn,setDisableSubmitBtn]=useState(false)
     let [showTable,setShowTable]=useState(true);
     let [location,setLocation]=useState("")
-    let [programme,setProgramme]=useState("")
+    let [participants,setParticipants]=useState("")
     let [showAddEventForm,setShowAddEventForm]=useState(false)
     let [events,setEvents]=useState<Event[]>([
         {
-            programme:"",
-            project:"",
+            event:"",
+            participants:"",
+            remarks:"",
             location:"",
             date:""
         }
@@ -67,9 +54,10 @@ export default function Events() {
             querySnapshot.forEach((doc) => {
                 let data={
                     id:doc.id,
-                    programme:doc.data().programme,
-                    project:doc.data().project,
+                    participants:doc.data().participants,
+                    event:doc.data().event,
                     date:doc.data().date,
+                    remarks:doc.data().remarks,
                     location:doc.data().location
                 }
                 list.push(data)
@@ -93,8 +81,7 @@ export default function Events() {
             if (index > -1) { // only splice array when item is found
                 checkedBoxArrayValues.splice(index, 1); // 2nd parameter means remove one item only
                 if(checkedBoxArrayValues.length===0){
-                    let header:any=document.getElementById("header")
-                    header.innerHTML=`
+                    header.innerHTML=screen.width>768?`
                     <div class="px-2 pt-1 flex items-center justify-between">
                         <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
                     </div>
@@ -108,17 +95,30 @@ export default function Events() {
                             <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
                             <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
                         </div>
-            
+        
                         <div class="flex flex-col justify-center">
                             <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
                             <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
                         </div>
-            
+        
                         <div class="flex flex-col justify-center">
                             <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
                             <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
                         </div>
                         </div>
+                    </div>
+                    `:`
+                    <div class="px-2 py-2 flex items-center justify-between ">
+                        <div class="flex gap-2 items-center">
+                            <img src="/uni_logo.png" alt="ruiru logo" width="25" height="25"/>
+                            <p class="text-base font-semibold">Team Ruiru Portal</p>
+                        </div>
+                        <button
+                            id="show_mobile_sidebar_btn"
+                            class="rounded-md p-1 border-[1px]"
+                        >
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="w-5 h-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+                        </button>
                     </div>
                     `
                     for (let i = 0; i < checkedBoxArrayValues.length; i++) {
@@ -132,7 +132,7 @@ export default function Events() {
             checkedBoxArrayValues.push(e.target.value)
         }
 
-        header.innerHTML=`
+        header.innerHTML=screen.width>768?`
             <div class="flex text-sm py-1 px-8 justify-between items-center">
               <div class="flex gap-1 items-center">
                 <p class="w-5 h-5 cursor-pointer" id="toggleHeader">X</p>
@@ -140,9 +140,17 @@ export default function Events() {
               </div>
               <button id="deleteCheckedItems" class="button border-[1px] border-gray-400 text-[var(--theme-blue)]">delete</button>
            </div>
+        `:`
+        <div class="flex text-sm py-1 px-8 justify-between items-center">
+            <div class="flex gap-1 items-center">
+                <p class="w-5 h-5 cursor-pointer" id="toggleHeader">X</p>
+                <p>${checkedBoxArrayValues&&checkedBoxArrayValues.length} selected</p>
+            </div>
+            <button id="deleteCheckedItems" class="button border-[1px] border-gray-400 text-white">delete</button>
+        </div>
         `
         document.getElementById("toggleHeader")?.addEventListener("click",()=>{
-            header.innerHTML=`
+            header.innerHTML=screen.width>768?`
             <div class="px-2 pt-1 flex items-center justify-between">
                 <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
             </div>
@@ -168,6 +176,19 @@ export default function Events() {
                 </div>
                 </div>
             </div>
+            `:`
+            <div class="px-2 py-2 flex items-center justify-between ">
+                <div class="flex gap-2 items-center">
+                    <img src="/uni_logo.png" alt="ruiru logo" width="25" height="25"/>
+                    <p class="text-base font-semibold">Team Ruiru Portal</p>
+                </div>
+                <button
+                    id="show_mobile_sidebar_btn"
+                    class="rounded-md p-1 border-[1px]"
+                >
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="w-5 h-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+                </button>
+            </div>
             `
             for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                 const value = checkedBoxArrayValues[i];
@@ -183,32 +204,45 @@ export default function Events() {
                     await deleteDoc(doc(db,"events",checkedItem))
                 })
                 fetchEventsFromFirebase()
-                header.innerHTML=`
-                    <div class="px-2 pt-1 flex items-center justify-between">
-                        <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
-                    </div>
-                    <div class="px-2 py-2 flex items-center justify-between ">
-                        <div class="flex gap-2 items-center">
+                header.innerHTML=screen.width>768?`
+                <div class="px-2 pt-1 flex items-center justify-between">
+                    <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+                </div>
+                <div class="px-2 py-2 flex items-center justify-between ">
+                    <div class="flex gap-2 items-center">
                         <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
                         <p class="text-lg font-semibold">Team Ruiru Portal</p>
-                        </div>
-                        <div class="flex gap-8 items-center">
-                        <div class="flex flex-col justify-center">
-                            <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
-                            <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
-                        </div>
-            
-                        <div class="flex flex-col justify-center">
-                            <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
-                            <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
-                        </div>
-            
-                        <div class="flex flex-col justify-center">
-                            <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
-                            <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
-                        </div>
-                        </div>
                     </div>
+                    <div class="flex gap-8 items-center">
+                    <div class="flex flex-col justify-center">
+                        <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
+                        <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+                    </div>
+    
+                    <div class="flex flex-col justify-center">
+                        <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
+                        <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+                    </div>
+    
+                    <div class="flex flex-col justify-center">
+                        <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
+                        <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
+                    </div>
+                    </div>
+                </div>
+                `:`
+                <div class="px-2 py-2 flex items-center justify-between ">
+                    <div class="flex gap-2 items-center">
+                        <img src="/uni_logo.png" alt="ruiru logo" width="25" height="25"/>
+                        <p class="text-base font-semibold">Team Ruiru Portal</p>
+                    </div>
+                    <button
+                        id="show_mobile_sidebar_btn"
+                        class="rounded-md p-1 border-[1px]"
+                    >
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="w-5 h-5" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path fill="none" d="M0 0h24v24H0z"></path><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+                    </button>
+                </div>
                 `
                 for (let i = 0; i < checkedBoxArrayValues.length; i++) {
                     const value = checkedBoxArrayValues[i];
@@ -225,17 +259,26 @@ export default function Events() {
 
     async function handleCreateEvent(e:any) {
         try {
+            setDisableSubmitBtn(true)
             e.preventDefault()
             let event:Event={
-                date:e.target.date.value,
-                project:e.target.project.value,
-                programme,
+                date: e.target.date.value,
+                event: e.target.event.value,
+                participants: participants,
+                // remarks: e.target.remark.value,
+                remarks: "pending",
                 location,
             }
             await addDoc(collection(db,"events"),event);
             fetchEventsFromFirebase()
+            if(md_screen===false){
+                setShowTable(!md_screen)
+                setShowAddEventForm(false)
+            }
             e.target.reset()
+            setDisableSubmitBtn(false)
         } catch (error:any) {
+            setDisableSubmitBtn(false)
             console.log(error)
             err_toast(error.message)
         }
@@ -303,24 +346,24 @@ export default function Events() {
                             <th className="text-left">
                                 <input type="checkbox" disabled className="w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                             </th> 
+                            <th className="text-left">Event</th>
                             <th className="text-left">Date</th>
-                            <th className="text-left">Programme</th>
-                            <th className="text-left">Project</th>
-                            <th className="text-left">Venue</th>
+                            <th className="text-left">Participants</th>
+                            <th className="text-left">Remarks</th>
                             {md_screen===true?<th className="text-left">Actions</th>:""}
                         </tr>
                     </thead>
                     <tbody className='text-sm'>
                         {events.map((event)=>{
                             return(
-                                <tr title={`#${event.programme}`} key={event.id} className="text-[#64748B]">
+                                <tr title={`#${event.event}`} key={event.id} className="text-[#64748B]">
                                     <td className="text-left">
                                         <input id={`checkbox_${event.id}`} type="checkbox" value={event.id} onChange={checkedBoxHandler} className="checkbox w-5 border-gray-400 focus:bg-[var(--theme-blue)] accent-[var(--theme-blue)] cursor-pointer h-5"/>
                                     </td>
+                                    <td className="text-left">{event.event}</td>
                                     <td className="text-left">{event.date}</td>
-                                    <td className="text-left">{event.programme}</td>
-                                    <td className="text-left">{event.project}</td>
-                                    <td className="text-left">{event.location}</td>
+                                    <td className="text-left">{event.participants}</td>
+                                    <td className="text-left">{event.remarks}</td>
                                     {md_screen===true?<td className="text-left dropdown dropbtn" title="Actions">
                                         <div 
                                             onClick={()=>showDropdown(`myDropdown_${event.id}`)} 
@@ -364,39 +407,31 @@ export default function Events() {
                         </button>
                     </div>
                     <form onSubmit={handleCreateEvent} className="flex mt-5 flex-col text-sm">
-                        <label className="mb-[8px] text-[#0f172a]" htmlFor="programme">Programmes <span className="text-red-500">*</span></label>
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="event">Event <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            {/* <Select
-                                id="programme"
-                                className="w-full focus:outline-[var(--theme-blue)] focus:outline-[1px]"
-                                placeholder="Choose a programme"
-                                options={programme_options}
-                                onChange={(e:any)=>setProgramme(e.value)}
-                                required
-                            /> */}
-                            <input id="programme"  onChange={(e:any)=>setProgramme(e.value)} name="programme" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter programme" required/>
+                            <input id="event" name="event" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter event" required/>
                         </div>
-                        <label className="mb-[8px] text-[#0f172a]" htmlFor="project"> Project name <span className="text-red-500">*</span></label>
+                        <label className="mb-[8px] text-[#0f172a]" htmlFor="location"> Venue <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            <input id="project" name="project" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Visiting the poor" required/>
+                            <input id="location" onChange={(e:any)=>setLocation(e.target.value)} name="location" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter venue" required/>
                         </div>
                         <label className="mb-[8px] text-[#0f172a]" htmlFor="date"> Choose Date <span className="text-red-500">*</span></label>
                         <div className="pb-4">
                             <input id="date" name="date" type="date" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Visiting the poor" required/>
                         </div>
-                        <label className="mb-[8px] text-[#0f172a]" htmlFor="location"> Venue <span className="text-red-500">*</span></label>
+                         <label className="mb-[8px] text-[#0f172a]" htmlFor="participants"> Participants <span className="text-red-500">*</span></label>
                         <div className="pb-4">
-                            {/* <Select
-                                id="location"
+                            {/* <input id="participants" name="participants" type="number" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Number of attendees" required/> */}
+                            <Select
+                                id="participants"
                                 className="w-full focus:outline-[var(--theme-blue)] focus:outline-[1px]"
-                                placeholder="Locations"
-                                options={location_options}
-                                onChange={(e:any)=>setLocation(e.value)}
+                                placeholder="Choose participants"
+                                options={participants_options}
+                                onChange={(e:any)=>setParticipants(e.value)}
                                 required
-                            /> */}
-                            <input id="location" onChange={(e:any)=>setLocation(e.value)} name="location" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter venue" required/>
+                            />
                         </div>
-                        <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Submit</button>
+                        <button disabled={disableSubmitBtn} className={disableSubmitBtn===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Submit</button>
                     </form>
                 </div>
             ):""}

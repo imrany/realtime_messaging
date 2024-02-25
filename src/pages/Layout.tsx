@@ -77,40 +77,48 @@ export default function Layout(){
     }
   }
 
+  let show_mobile_sidebar_btn=document.querySelector("#show_mobile_sidebar_btn")
+  show_mobile_sidebar_btn?.addEventListener("click",()=>{
+    console.log("hey")
+    setShowMobileSidebar(true)
+  })
+
   useEffect(()=>{
-    let header:any=document.getElementById("header")
-    header.innerHTML=`
-      <div class="px-2 pt-1 flex items-center justify-between">
-          <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
-      </div>
-      <div class="px-2 py-2 flex items-center justify-between ">
-          <div class="flex gap-2 items-center">
-              <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
-              <p class="text-lg font-semibold">Team Ruiru Portal</p>
-          </div>
-          <div class="flex gap-8 items-center">
-          <div class="flex flex-col justify-center">
-              <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
-              <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
-          </div>
-
-          <div class="flex flex-col justify-center">
-              <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
-              <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
-          </div>
-
-          <div class="flex flex-col justify-center">
-              <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
-              <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
-          </div>
-          </div>
-      </div>
-    `
+    if(screen.width>768){
+      let header:any=document.getElementById("header")
+      header.innerHTML=`
+        <div class="px-2 pt-1 flex items-center justify-between">
+            <p class="text-sm ml-auto">Logged in as <span class="underline text-[var(--theme-blue)]">${email}</span></p>
+        </div>
+        <div class="px-2 py-2 flex items-center justify-between ">
+            <div class="flex gap-2 items-center">
+                <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
+                <p class="text-lg font-semibold">Team Ruiru Portal</p>
+            </div>
+            <div class="flex gap-8 items-center">
+            <div class="flex flex-col justify-center">
+                <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
+                <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+            </div>
+  
+            <div class="flex flex-col justify-center">
+                <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
+                <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+            </div>
+  
+            <div class="flex flex-col justify-center">
+                <p class="text-[var(--theme-yellow)] font-semibold">Virtual Tour:</p>
+                <a href="#" target="_blank" rel="noopener noreferrer">Click to Visit</a>
+            </div>
+            </div>
+        </div>
+      `
+    }
   },[location.pathname])
   return (
     <>
       <nav className="md-nav border-b-[1px] shadow-sm">
-        <div className="" id="header">
+        <div className="" id={screen.width>768?"header":""}>
           <div className="px-2 pt-1 flex items-center justify-between">
             <p className="text-sm ml-auto">Logged in as <span className="underline text-[var(--theme-blue)]">{email}</span></p>
           </div>
@@ -144,13 +152,14 @@ export default function Layout(){
       </nav>
 
       <nav className="max-md-nav bg-[var(--theme-blue)] text-white shadow-sm">
-        <div className="" id="header">
+        <div className="" id={screen.width<768?"header":""}>
           <div className="px-2 py-2 flex items-center justify-between ">
             <div className="flex gap-2 items-center">
               <img src="/uni_logo.png" alt="ruiru logo" width={25} height={25}/>
               <p className="text-base font-semibold">Team Ruiru Portal</p>
             </div>
             <button
+              id="show_mobile_sidebar_btn"
               onClick={()=>setShowMobileSidebar(true)}
               className="rounded-md p-1 border-[1px]"
             >
@@ -168,7 +177,7 @@ export default function Layout(){
               </button>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-y-auto">
               {links.map((link,index)=>(<Link to={link.to} className={location.pathname===link.to?"px-9 py-4 bg-white text-[#213547]":"px-9 py-4 hover:bg-slate-200 hover:text-[#213547]"} onClick={()=>setShowMobileSidebar(false)} key={index}>{link.name}</Link>))}
               <button onClick={logout} className="px-9 py-4 text-left text-[#213547]">Log out</button>
             </div>

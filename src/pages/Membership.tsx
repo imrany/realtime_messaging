@@ -22,6 +22,7 @@ let sort_options=[
 
 export default function Members() {
     const { email } =useContext(GlobalContext)
+    let md_screen:boolean=screen.width>930||screen.width===930?true:false;
     let [showTable,setShowTable]=useState(true);
     let [showAddMemberForm,setShowAddMemberForm]=useState(false)
     let [members,setMembers]=useState<Member[]>([
@@ -205,6 +206,10 @@ export default function Members() {
             }
             await addDoc(collection(db,"members"),member);
             await createUserWithEmailAndPassword(auth, member.email, `${member.telephone}`);
+            if(md_screen===false){
+                setShowTable(!md_screen)
+                setShowAddMemberForm(false)
+            }
             fetchMemberFromFirebase()
             e.target.reset()
         } catch (error:any) {
@@ -218,7 +223,6 @@ export default function Members() {
         dropdown.classList.toggle("show");
     }
 
-    let md_screen:boolean=screen.width>930||screen.width===930?true:false;
     window.onresize=function(){
         md_screen=screen.width>930||screen.width===930?true:false
         if(showAddMemberForm){
