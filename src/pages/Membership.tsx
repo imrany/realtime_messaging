@@ -23,6 +23,7 @@ let sort_options=[
 export default function Members() {
     const { email } =useContext(GlobalContext)
     let md_screen:boolean=screen.width>930||screen.width===930?true:false;
+    let [disable,setDisable]=useState(false)
     let [showTable,setShowTable]=useState(true);
     let [showAddMemberForm,setShowAddMemberForm]=useState(false)
     let [members,setMembers]=useState<Member[]>([
@@ -199,6 +200,7 @@ export default function Members() {
     async function handleCreateMemeber(e:any) {
         try {
             e.preventDefault()
+            setDisable(true)
             let member:Member={
                 name:e.target.name.value,
                 telephone:e.target.telephone.value,
@@ -212,7 +214,9 @@ export default function Members() {
             }
             fetchMemberFromFirebase()
             e.target.reset()
+            setDisable(false)
         } catch (error:any) {
+            setDisable(false)
             console.log(error)
             err_toast(error.message)
         }
@@ -350,7 +354,7 @@ export default function Members() {
                         <div className="pb-4">
                             <input id="telephone" name="telephone" type="tel" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="2547XXXXXXXX" required/>
                         </div>
-                        <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Submit</button>
+                        <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Submit</button>
                     </form>
                 </div>
             ):""}

@@ -9,6 +9,7 @@ function ChatRoom() {
     const { email } =useContext(GlobalContext)
     const [showAddReplyForm,setShowAddReplyForm]=useState(false)
     const [showChats,setShowChats]=useState(true)
+    const [disable,setDisable]=useState(false)
     let md_screen:boolean=screen.width>930||screen.width===930?true:false;
     const [chats,setChats]=useState<Chat[]>([
         {
@@ -53,6 +54,7 @@ function ChatRoom() {
     async function handleReply(e:any) {
         try{
             e.preventDefault()
+            setDisable(true)
             let message:Chat={
                 from:email,
                 message:e.target.message.value,
@@ -65,7 +67,10 @@ function ChatRoom() {
                 setShowAddReplyForm(false)
             }
             e.target.reset()
+            setDisable(false)
         }catch(error:any){
+            setDisable(false)
+            err_toast(error.message)
             console.log(error)
         }
     }
@@ -181,7 +186,7 @@ function ChatRoom() {
                             <div className="pb-4">
                                 <input id="message" name="message" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Hey there..." required/>
                             </div>
-                            <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Send Text</button>
+                            <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Send Text</button>
                         </form>
                     </div>
                 </div>

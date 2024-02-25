@@ -21,6 +21,7 @@ let sort_options=[
 
 export default function Songs() {
     const { email } =useContext(GlobalContext)
+    let [disable,setDisable]=useState(false);
     let [showTable,setShowTable]=useState(true);
     let [showAddSongForm,setShowAddSongForm]=useState(false)
     let [songs,seSongs]=useState<Song[]>([
@@ -194,6 +195,7 @@ export default function Songs() {
     async function handleCreateSong(e:any) {
         try {
             e.preventDefault()
+            setDisable(true)
             let member:Song={
                 song_name:e.target.song_name.value,
                 youtube_link:e.target.youtube_link.value,
@@ -205,7 +207,9 @@ export default function Songs() {
                 setShowAddSongForm(false)
             }
             e.target.reset()
+            setDisable(false)
         } catch (error:any) {
+            setDisable(false)
             console.log(error)
             err_toast(error.message)
         }
@@ -348,7 +352,7 @@ export default function Songs() {
                         <div className="pb-4">
                             <input id="youtube_link" name="youtube_link" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="https://www.youtube.com/watch..." required/>
                         </div>
-                        <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Submit</button>
+                        <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Submit</button>
                     </form>
                 </div>
             ):""}

@@ -5,6 +5,7 @@ import { err_toast, success_toast } from "../components/Feedback";
 
 function Login() {
     let [eye_icon,setEye_icon]=useState(<FaEye className="h-5 w-5"/>);
+    let [disable,setDisable]=useState(false); 
 
     function toggle_password(){
         let password=document.getElementById("password");
@@ -22,6 +23,7 @@ function Login() {
     async function handleLogin(e:any){
         try {
             e.preventDefault();
+            setDisable(true)
             let userInput={
                 email:e.target.email.value,
                 password:e.target.password.value
@@ -30,7 +32,9 @@ function Login() {
             const user = userCredential.user;
             console.log(user)
             success_toast(`Sign in successfull`)
+            setDisable(false)
         } catch (error:any) {
+            setDisable(false)
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(error,errorCode,errorMessage)
@@ -63,7 +67,7 @@ function Login() {
                 </div>
 
                 <a href="#" target="_blank" rel="noopener noreferrer" className="text-[#475569] underline text-[14px] ml-auto">Forget Password?</a>
-                <button className="mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]">Sign in</button>
+                <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Sign in</button>
                 <div className="flex mt-5">
                     <p className="mr-3">{"Don't have an account"}</p>
                     <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer" className="underline text-[var(--theme-blue)]">Contact an Admin</a>
