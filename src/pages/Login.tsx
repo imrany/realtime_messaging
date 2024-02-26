@@ -38,7 +38,7 @@ function Login() {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(error,errorCode,errorMessage)
-            err_toast(error.message)
+            errorCode==="auth/network-request-failed"?err_toast(`No internet`):err_toast(error.message)
         }
     }
     return (
@@ -67,7 +67,13 @@ function Login() {
                 </div>
 
                 <a href="#" target="_blank" rel="noopener noreferrer" className="text-[#475569] underline text-[14px] ml-auto">Forget Password?</a>
-                <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Sign in</button>
+                <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>
+                    {disable===false?(<span>
+                        Sign in
+                    </span>):(
+                        <i className="italic">Signing in...</i>
+                    )}
+                </button>
                 <div className="flex mt-5">
                     <p className="mr-3">{"Don't have an account"}</p>
                     <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer" className="underline text-[var(--theme-blue)]">Contact an Admin</a>

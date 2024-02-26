@@ -186,7 +186,13 @@ function ChatRoom() {
                             <div className="pb-4">
                                 <input id="message" name="message" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Hey there..." required/>
                             </div>
-                            <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Send Text</button>
+                            <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>
+                            {disable===false?(<span>
+                                Send Text
+                            </span>):(
+                                <i className="italic">Sending Text...</i>
+                            )}
+                            </button>
                         </form>
                     </div>
                 </div>

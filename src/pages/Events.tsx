@@ -431,7 +431,13 @@ export default function Events() {
                                 required
                             />
                         </div>
-                        <button disabled={disableSubmitBtn} className={disableSubmitBtn===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Submit</button>
+                        <button disabled={disableSubmitBtn} className={disableSubmitBtn===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>
+                            {disableSubmitBtn===false?(<span>
+                                Submit
+                            </span>):(
+                                <i className="italic">Submitting...</i>
+                            )}
+                        </button>
                     </form>
                 </div>
             ):""}

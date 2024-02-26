@@ -352,7 +352,13 @@ export default function Songs() {
                         <div className="pb-4">
                             <input id="youtube_link" name="youtube_link" type="text" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="https://www.youtube.com/watch..." required/>
                         </div>
-                        <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Submit</button>
+                        <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>
+                        {disable===false?(<span>
+                            Submit
+                        </span>):(
+                            <i className="italic">Submitting...</i>
+                        )}
+                        </button>
                     </form>
                 </div>
             ):""}

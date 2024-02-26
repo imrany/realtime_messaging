@@ -395,7 +395,13 @@ export default function projects() {
                                 <div className="pb-4">
                                     <input id="account_for_payment" name="account_for_payment" type="tel" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="254734XXXXXX" required/>
                                 </div>
-                                <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>Submit</button>
+                                <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>
+                                {disable===false?(<span>
+                                    Submit
+                                </span>):(
+                                    <i className="italic">Submitting...</i>
+                                )}
+                                </button>
                             </form>
                         </div>
                     ):""}
