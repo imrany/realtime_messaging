@@ -113,6 +113,7 @@ function ChatRoom() {
     }
     useEffect(()=>{
         fetchChatsFromFirebase()
+        window.scrollTo(0,0)
     },[updateChats])
     return (
         <div className="p-10 flex gap-4 max-sm:flex-wrap min-h-[50vh]">

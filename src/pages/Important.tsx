@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 function Important() {
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <div className="flex flex-col p-10 min-h-[60vh]">
 			<div>

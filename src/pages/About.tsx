@@ -1,6 +1,10 @@
+import { useEffect } from "react";
 import { FaBuilding, FaFacebook, FaPhone } from "react-icons/fa"
 import { FaLocationPin } from "react-icons/fa6";
 function About() {
+	useEffect(()=>{
+		window.scrollTo(0,0)
+	},[])
     return (
         <div className="flex flex-col p-10 min-h-[60vh]">
 			<div>

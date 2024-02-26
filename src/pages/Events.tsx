@@ -299,6 +299,7 @@ export default function Events() {
 
     useEffect(()=>{
         fetchEventsFromFirebase()
+        window.scrollTo(0,0)
     },[])
     return (
         <div className={md_screen===false?"min-h-[60vh] md:p-10 max-md:py-10 justify-center flex gap-4 max-sm:flex-wrap":"min-h-[60vh] md:p-10 max-md:py-10 flex gap-4 max-sm:flex-wrap"}>

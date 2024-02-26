@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { err_toast } from "../components/Feedback";
 
 function Resources() {
@@ -17,6 +17,9 @@ function Resources() {
             console.log(error)
         }
     }
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <div className="flex min-h-[60vh] flex-col p-10">
 			<div>

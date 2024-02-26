@@ -3,6 +3,7 @@ import community_work from "../assets/community-work.png";
 import prayers from "../assets/prayers.png";
 import orphans from "../assets/orphans.png";
 import charity from "../assets/charity.png";
+import { useEffect } from "react";
 
 function Notification() {
     let notifications=[
@@ -31,6 +32,9 @@ function Notification() {
             description:"2023: Visiting Orphanage"
         }
     ]
+    useEffect(()=>{
+        window.scrollTo(0,0)
+    },[])
     return (
         <div className="flex flex-col">
             <div id="notifcation_hero_image" className="w-full h-[60vh] text-[var(--theme-gray)] flex flex-col gap-2 items-center justify-center">

@@ -2,6 +2,7 @@ import community_work from "../assets/community-work.png";
 import prayers from "../assets/prayers.png";
 import orphans from "../assets/orphans.png";
 import charity from "../assets/charity.png";
+import { useEffect } from "react";
 
 function Archives() {
     let archives=[
@@ -22,6 +23,9 @@ function Archives() {
             title:"Charity & Help",
         }
     ]
+    useEffect(()=>{
+		window.scrollTo(0,0)
+	},[])
     return (
         <div className="min-h-[60vh]">
             <div className="sm:p-10 max-sm:p-8">
