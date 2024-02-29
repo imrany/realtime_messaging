@@ -8,7 +8,7 @@ export default function Footer(){
         <footer className="flex mt-20 flex-col md:px-28 max-md:px-10 py-6 bg-[var(--theme-blue)] text-[var(--theme-gray)]">
             <div className="flex max-sm:flex-col max-sm:gap-y-6 justify-between sm:items-center pb-3 border-b-[1px] border-gray-400">
                 <div className="flex flex-col gap-2 text-sm">
-                    <p className="text-xl font-semibold">About Team Ruiru</p>
+                    <p className="text-xl font-semibold">About Realtime messaging platform</p>
                     <Link to="/" className="hover:text-[var(--theme-dark)]">About</Link>
                     <Link to="/chat_room" className="hover:text-[var(--theme-dark)]">Our chat Room</Link>
                 </div>
