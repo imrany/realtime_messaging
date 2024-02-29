@@ -47,7 +47,7 @@ export default function CreateAccount() {
                     {passwordErr}
                     <label className="mb-[8px] font-semibold text-[#0f172a]" htmlFor="email">Email</label>
                     <div className="pb-4">
-                        <input id="email" name="email" type="email" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="johndoe@gmail.com" required/>
+                        <input id="email" name="email" type="email" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="Enter email" required/>
                     </div>
 
                     <label htmlFor="password" className=" font-semibold mb-[8px] text-[#0f172a]">Password</label>
@@ -56,10 +56,10 @@ export default function CreateAccount() {
                             <input id="password" name="password" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
                         </div>
                     </div>
-                    <label htmlFor="password" className=" font-semibold mb-[8px] text-[#0f172a]">Confirm Password</label>
+                    <label htmlFor="confirmpassword" className=" font-semibold mb-[8px] text-[#0f172a]">Confirm Password</label>
                     <div className="flex flex-col">
                         <div className="flex">
-                            <input id="password" name="confirmpassword" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
+                            <input id="confirmpassword" name="confirmpassword" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
                         </div>
                     </div>
                 </div>
