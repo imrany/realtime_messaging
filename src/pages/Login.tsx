@@ -2,6 +2,7 @@ import { useState } from "react"
 import { FaEye, FaEyeSlash, FaInfoCircle } from "react-icons/fa";
 import { auth, signInWithEmailAndPassword } from "../firebaseConfig/config";
 import { err_toast, success_toast } from "../components/Feedback";
+import { Link } from "react-router-dom";
 
 function Login() {
     let [eye_icon,setEye_icon]=useState(<FaEye className="h-5 w-5"/>);
@@ -76,7 +77,7 @@ function Login() {
                 </button>
                 <div className="flex mt-5">
                     <p className="mr-3">{"Don't have an account"}</p>
-                    <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer" className="underline text-[var(--theme-blue)]">Contact an Admin</a>
+                    <Link to="/create" className="underline text-[var(--theme-blue)]">Create an account</Link>
                 </div>
                 <div className="mt-5 text-xs flex items-center gap-x-1 text-[var(--gray-text)]">
                     <FaInfoCircle className="w-5 h-5"/>

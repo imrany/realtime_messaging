@@ -1,38 +1,32 @@
 import { useState } from "react"
-import { FaEye, FaEyeSlash, FaInfoCircle } from "react-icons/fa";
-import { auth, signInWithEmailAndPassword } from "../firebaseConfig/config";
+import { FaInfoCircle } from "react-icons/fa";
+import { auth, createUserWithEmailAndPassword } from "../firebaseConfig/config";
 import { err_toast, success_toast } from "../components/Feedback";
+import { Link } from "react-router-dom";
 
 export default function CreateAccount() {
-    let [eye_icon,setEye_icon]=useState(<FaEye className="h-5 w-5"/>);
     let [disable,setDisable]=useState(false); 
+    let [passwordErr,setPasswordErr]=useState(<></>); 
 
-    function toggle_password(){
-        let password=document.getElementById("password");
-        if(password?.getAttribute("type")=="password"){
-          password?.setAttribute("type","text");
-          setEye_icon(<FaEyeSlash className="h-5 w-5"/>);
-          return;
-        }
-        password?.setAttribute("type","password");
-        setEye_icon(<FaEye className="h-5 w-5"/>);
-    }
-
-    
-
-    async function handleLogin(e:any){
+    async function handleSignUp(e:any){
         try {
-            e.preventDefault();
-            setDisable(true)
+            e.preventDefault()
             let userInput={
                 email:e.target.email.value,
-                password:e.target.password.value
+                password:e.target.confirmpassword.value
             }
-            let userCredential=await signInWithEmailAndPassword(auth, userInput.email, userInput.password);
-            const user = userCredential.user;
-            console.log(user)
-            success_toast(`Sign in successfull`)
-            setDisable(false)
+            if(e.target.confirmpassword.value===e.target.password.value){
+                setDisable(true)
+                let userCredential=await createUserWithEmailAndPassword(auth, userInput.email, userInput.password);
+                const user = userCredential.user;
+                console.log(user)
+                success_toast(`Sign in successfull`)
+                setDisable(false)
+            }else{
+                setPasswordErr(
+                    <p className="text-red-500 text-[11px]">Passwords doesn't match</p>
+                )
+            }
         } catch (error:any) {
             setDisable(false)
             const errorCode = error.code;
@@ -48,20 +42,24 @@ export default function CreateAccount() {
                 <p className="text-[30px] text-[#1e293b] mb-[8px] font-semibold">Create Account</p>
                 <p className="text-[#64748b] text-[14px]">Enter your credentials to access our realtime messaging platform.</p>
                 </div>
-                <form onSubmit={(e)=>handleLogin(e)} className="flex flex-col text-sm">
+                <form onSubmit={(e)=>handleSignUp(e)} className="flex flex-col text-sm">
                 <div className="flex flex-col mb-3">
+                    {passwordErr}
                     <label className="mb-[8px] font-semibold text-[#0f172a]" htmlFor="email">Email</label>
                     <div className="pb-4">
-                        <input id="email" name="email" defaultValue={"johndoe@gmail.com"} type="email" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="johndoe@gmail.com" required/>
+                        <input id="email" name="email" type="email" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="johndoe@gmail.com" required/>
                     </div>
 
                     <label htmlFor="password" className=" font-semibold mb-[8px] text-[#0f172a]">Password</label>
                     <div className="flex flex-col">
                         <div className="flex">
-                            <input id="password" name="password" defaultValue={"12345678"} type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
-                            <button type="button" onClick={toggle_password} className="rounded-r-lg px-3 py-2 border-[1px] w-[53px] bg-white text-[#64748b]">
-                            {eye_icon}
-                            </button>
+                            <input id="password" name="password" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
+                        </div>
+                    </div>
+                    <label htmlFor="password" className=" font-semibold mb-[8px] text-[#0f172a]">Confirm Password</label>
+                    <div className="flex flex-col">
+                        <div className="flex">
+                            <input id="password" name="confirmpassword" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
                         </div>
                     </div>
                 </div>
@@ -75,8 +73,8 @@ export default function CreateAccount() {
                     )}
                 </button>
                 <div className="flex mt-5">
-                    <p className="mr-3">{"Don't have an account"}</p>
-                    <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer" className="underline text-[var(--theme-blue)]">Contact an Admin</a>
+                    <p className="mr-3">{"Do you have an account?"}</p>
+                    <Link to="/login" className="underline text-[var(--theme-blue)]">Login instead</Link>
                 </div>
                 <div className="mt-5 text-xs flex items-center gap-x-1 text-[var(--gray-text)]">
                     <FaInfoCircle className="w-5 h-5"/>

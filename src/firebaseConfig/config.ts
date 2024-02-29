@@ -8,13 +8,13 @@ import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, onSnapshot }
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCTcBHD3I-dEOeddax_dOhShqurLU838M4",
-  authDomain: "e-ruiri-portal.firebaseapp.com",
-  projectId: "e-ruiri-portal",
-  storageBucket: "e-ruiri-portal.appspot.com",
-  messagingSenderId: "727306142930",
-  appId: "1:727306142930:web:9bf6e33b7880567601d90b",
-  measurementId: "G-VZXH7S7N0K"
+  apiKey: "AIzaSyDlkF6RhJVOYe5nyN6KguPH-F04m2ws1PE",
+  authDomain: "realtime-messaging-platform.firebaseapp.com",
+  projectId: "realtime-messaging-platform",
+  storageBucket: "realtime-messaging-platform.appspot.com",
+  messagingSenderId: "368601117784",
+  appId: "1:368601117784:web:9da71600bce858350dc62d",
+  measurementId: "G-35BFDWK8PF"
 };
 
 // Initialize Firebase
