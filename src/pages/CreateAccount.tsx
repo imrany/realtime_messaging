@@ -53,18 +53,17 @@ export default function CreateAccount() {
                     <label htmlFor="password" className=" font-semibold mb-[8px] text-[#0f172a]">Password</label>
                     <div className="flex flex-col">
                         <div className="flex">
-                            <input id="password" name="password" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
+                            <input id="password" name="password" placeholder="Enter password" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
                         </div>
                     </div>
                     <label htmlFor="confirmpassword" className=" font-semibold mb-[8px] text-[#0f172a]">Confirm Password</label>
                     <div className="flex flex-col">
                         <div className="flex">
-                            <input id="confirmpassword" name="confirmpassword" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
+                            <input id="confirmpassword" placeholder="Confirm password" name="confirmpassword" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
                         </div>
                     </div>
                 </div>
 
-                <a href="#" target="_blank" rel="noopener noreferrer" className="text-[#475569] underline text-[14px] ml-auto">Forget Password?</a>
                 <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>
                     {disable===false?(<span>
                         Create

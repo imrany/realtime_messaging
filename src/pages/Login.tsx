@@ -53,13 +53,13 @@ function Login() {
                 <div className="flex flex-col mb-3">
                     <label className="mb-[8px] font-semibold text-[#0f172a]" htmlFor="email">Email</label>
                     <div className="pb-4">
-                        <input id="email" name="email" defaultValue={"johndoe@gmail.com"} type="email" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="johndoe@gmail.com" required/>
+                        <input id="email" name="email" type="email" className={`px-[10px] w-full py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-lg`} placeholder="johndoe@gmail.com" required/>
                     </div>
 
                     <label htmlFor="password" className=" font-semibold mb-[8px] text-[#0f172a]">Password</label>
                     <div className="flex flex-col">
                         <div className="flex">
-                            <input id="password" name="password" defaultValue={"12345678"} type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
+                            <input id="password" name="password" placeholder="Enter password" type="password" className={`flex-grow px-[10px] py-2 focus:outline-[var(--theme-blue)] focus:outline-[1px] bg-white border-[1px] rounded-l-lg`} minLength={8} maxLength={24} required/>
                             <button type="button" onClick={toggle_password} className="rounded-r-lg px-3 py-2 border-[1px] w-[53px] bg-white text-[#64748b]">
                             {eye_icon}
                             </button>
