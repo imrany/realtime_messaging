@@ -73,10 +73,10 @@ function App() {
             <Toaster/>
             <Routes>
               <Route path="/login" element={!isAuth?<Login/>:<Navigate to="/"/>}/>
+              <Route path="/create" element={!isAuth?<CreateAccount />:<Navigate to="/"/>} />
               <Route path="/" element={isAuth?<Layout />:<Navigate to="/login"/>}>
                 <Route index element={<About />} />
                 <Route path="chat_room" element={<ChatRoom />} />
-                <Route path="create" element={<CreateAccount />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
