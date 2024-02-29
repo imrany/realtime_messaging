@@ -26,40 +26,8 @@ export default function Layout(){
       to:"/"
     },
     {
-      name:"Notification",
-      to:"/notification"
-    },
-    {
-      name:"Events",
-      to:"/events"
-    },
-    {
-      name:"Membership",
-      to:"/membership"
-    },
-    {
-      name:"Projects",
-      to:"/projects"
-    },
-    {
-      name:"Resources",
-      to:"/resources"
-    },
-    {
       name:"Chat Room",
       to:"/chat_room"
-    },
-    {
-      name:"Songs",
-      to:"/songs"
-    },
-    {
-      name:"Archives",
-      to:"/archives"
-    },
-    {
-      name:"Important",
-      to:"/important"
     }
   ]
 
@@ -79,7 +47,6 @@ export default function Layout(){
 
   let show_mobile_sidebar_btn=document.querySelector("#show_mobile_sidebar_btn")
   show_mobile_sidebar_btn?.addEventListener("click",()=>{
-    console.log("hey")
     setShowMobileSidebar(true)
   })
 
@@ -93,17 +60,17 @@ export default function Layout(){
         <div class="px-2 py-2 flex items-center justify-between ">
             <div class="flex gap-2 items-center">
                 <img src="/uni_logo.png" alt="ruiru logo" width="30" height="30"/>
-                <p class="text-lg font-semibold">Team Ruiru Portal</p>
+                <p class="text-lg font-semibold">Realtime messaging platform</p>
             </div>
             <div class="flex gap-8 items-center">
             <div class="flex flex-col justify-center">
                 <p class="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
-                <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+                <a href="tel:+254734720752" target="_blank" rel="noopener noreferrer">+254734720752</a>
             </div>
   
             <div class="flex flex-col justify-center">
                 <p class="text-[var(--theme-yellow)] font-semibold">Email:</p>
-                <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+                <a href="mailto:imranmat254@gmail.com" target="_blank" rel="noopener noreferrer">imranmat254@gmail.com</a>
             </div>
   
             <div class="flex flex-col justify-center">
@@ -125,17 +92,17 @@ export default function Layout(){
           <div className="px-2 py-2 flex items-center justify-between ">
             <div className="flex gap-2 items-center">
               <img src="/uni_logo.png" alt="ruiru logo" width={30} height={30}/>
-              <p className="text-lg font-semibold">Team Ruiru Portal</p>
+              <p className="text-lg font-semibold">Realtime messaging platform</p>
             </div>
             <div className="flex gap-8 items-center">
               <div className="flex flex-col justify-center">
                 <p className="text-[var(--theme-yellow)] font-semibold">Call Us:</p>
-                <a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+                <a href="tel:+254734720752" target="_blank" rel="noopener noreferrer">+254734720752</a>
               </div>
 
               <div className="flex flex-col justify-center">
                 <p className="text-[var(--theme-yellow)] font-semibold">Email:</p>
-                <a href="mailto:blacksharkchi@proton.me" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a>
+                <a href="mailto:imranmat2542gmail.com" target="_blank" rel="noopener noreferrer">imranmat254@gmail.com</a>
               </div>
 
               <div className="flex flex-col justify-center">
@@ -156,7 +123,7 @@ export default function Layout(){
           <div className="px-2 py-2 flex items-center justify-between ">
             <div className="flex gap-2 items-center">
               <img src="/uni_logo.png" alt="ruiru logo" width={25} height={25}/>
-              <p className="text-base font-semibold">Team Ruiru Portal</p>
+              <p className="text-base font-semibold">Realtime messaging platform</p>
             </div>
             <button
               id="show_mobile_sidebar_btn"

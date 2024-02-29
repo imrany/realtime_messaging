@@ -9,8 +9,9 @@ function About() {
         <div className="flex flex-col p-10 min-h-[60vh]">
 			<div>
 				<p className="text-3xl max-md:text-2xl font-semibold">About Us</p>
-				<p>The purpose of this website is to assist in reaching out team Ruiru members and ensuring the growth of the team.</p> 
-				<p> It will enable easy follow up of contributions, members well being, spiritual growth and bonding.</p> 
+				<p>Realtime messaging platform is an online system that enable collective text-based commucation.</p> 
+				<p>This system enables multiple people to commucate on a single platform/channel.</p>
+				<p>All users are authenticated and authorzed to used this platform with their emails and passwords.</p> 
 			</div>
 
 			<div className="mt-10 text-sm">
@@ -20,25 +21,25 @@ function About() {
 				<div className="flex flex-col gap-3 mt-3 pb-6 text-gray-600 border-b-[1px]">
 					<div className="flex items-center gap-2">
 						<FaBuilding/>
-						<p>Ruiru, Nairobi</p>
+						<p>Rongo, Migori</p>
 					</div>
 					<div className="flex items-center gap-2">
 						<FaLocationPin />
-						<p>Team Ruiru, Nairobi</p>
+						<p>Rongo, Migori</p>
 					</div>
 					<div className="flex items-center gap-2">
 						<FaPhone />
-						<a href="tel:+254759230448" target="_blank" rel="noopener noreferrer">+254759230448</a>
+						<a href="tel:+254734720752" target="_blank" rel="noopener noreferrer">+254734720752</a>
 					</div>
 					<div className="flex items-center gap-2">
 						<FaFacebook />
-						<a href="https://facebook.com" target="_blank" rel="noopener noreferrer">@teamruiru</a>
+						<a href="https://facebook.com" target="_blank" rel="noopener noreferrer">@realtime_messaging</a>
 					</div>
 				</div>
 
 				<div className="mt-6 pb-6 text-gray-600">
 					<p className="text-xl text-slate-600 font-semibold">Contact Patnerships by Email</p>
-					<p>If you wish to write us an email instead please use <a href="mailto:blacksharkchi@proton.me" className="text-[var(--theme-blue)]" target="_blank" rel="noopener noreferrer">teamruiru@gmail.com</a></p>
+					<p>If you wish to write us an email instead please use <a href="mailto:imranmat254@gmail.com" className="text-[var(--theme-blue)]" target="_blank" rel="noopener noreferrer">imranmat254@gmail.com</a></p>
 				</div>
 			</div>
         </div>

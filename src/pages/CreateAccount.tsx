@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash, FaInfoCircle } from "react-icons/fa";
 import { auth, signInWithEmailAndPassword } from "../firebaseConfig/config";
 import { err_toast, success_toast } from "../components/Feedback";
 
-function Login() {
+export default function CreateAccount() {
     let [eye_icon,setEye_icon]=useState(<FaEye className="h-5 w-5"/>);
     let [disable,setDisable]=useState(false); 
 
@@ -45,8 +45,8 @@ function Login() {
         <main className="flex md:h-screen max-md:h-[85vh] max-md:justify-center flex-col items-center md:p-4">
             <div className="flex flex-col sm:w-[440px] max-sm:w-[85vw]">
                 <div className="sm:my-[40px] max-sm:my-[20px]">
-                <p className="text-[30px] text-[#1e293b] mb-[8px] font-semibold">Sign in</p>
-                <p className="text-[#64748b] text-[14px]">Enter your credentials to access our realtime messaging platform</p>
+                <p className="text-[30px] text-[#1e293b] mb-[8px] font-semibold">Create Account</p>
+                <p className="text-[#64748b] text-[14px]">Enter your credentials to access our realtime messaging platform.</p>
                 </div>
                 <form onSubmit={(e)=>handleLogin(e)} className="flex flex-col text-sm">
                 <div className="flex flex-col mb-3">
@@ -69,9 +69,9 @@ function Login() {
                 <a href="#" target="_blank" rel="noopener noreferrer" className="text-[#475569] underline text-[14px] ml-auto">Forget Password?</a>
                 <button disabled={disable} className={disable===true?"cursor-wait mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-dark)]":"mt-5 capitalize py-3 px-6 text-white rounded-md bg-[var(--theme-blue)]"}>
                     {disable===false?(<span>
-                        Sign in
+                        Create
                     </span>):(
-                        <i className="italic">Signing in...</i>
+                        <i className="italic">Creating account...</i>
                     )}
                 </button>
                 <div className="flex mt-5">
@@ -80,12 +80,10 @@ function Login() {
                 </div>
                 <div className="mt-5 text-xs flex items-center gap-x-1 text-[var(--gray-text)]">
                     <FaInfoCircle className="w-5 h-5"/>
-                    <p>Only members should sign in.</p>
+                    <p>By creating an account you've agreed with our privacy policies.</p>
                     </div>
                 </form>
             </div>
         </main>
     );
 };
-
-export default Login;

@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaLinkedin, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Footer(){
@@ -10,33 +10,23 @@ export default function Footer(){
                 <div className="flex flex-col gap-2 text-sm">
                     <p className="text-xl font-semibold">About Team Ruiru</p>
                     <Link to="/" className="hover:text-[var(--theme-dark)]">About</Link>
-                    <Link to="/notification" className="hover:text-[var(--theme-dark)]">Notification</Link>
                     <Link to="/chat_room" className="hover:text-[var(--theme-dark)]">Our chat Room</Link>
-                    <Link to="/membership" className="hover:text-[var(--theme-dark)]">Membership</Link>
                 </div>
 
                 <div className="flex flex-col gap-2 text-sm">
                     <p className="text-xl font-semibold">Social Media</p>
                     <a href="" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-[var(--theme-dark)]">
-                        <FaFacebook className="w-5 h-5"/>
-                        @teamruiru
-                    </a>
-                    <a href="" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-[var(--theme-dark)]">
                         <FaTwitter className="w-5 h-5"/>
-                        @teamruiru
+                        @imran_online
                     </a>
                     <a href="" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-[var(--theme-dark)]">
                         <FaLinkedin className="w-5 h-5"/>
-                        @teamruiru
-                    </a>
-                    <a href="" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-[var(--theme-dark)]">
-                        <FaInstagram className="w-5 h-5"/>
-                        @teamruiru
+                        @imran_online
                     </a>
                 </div>
             </div>
             <div className="mt-6 flex justify-between items-center">
-                <p>&copy; <span>Team Ruiru Portal. {year}. Ruiru, Nairobi.</span></p>
+                <p>&copy; <span>Realtime messaging platform. {year}. Rongo, Migori.</span></p>
             </div>
         </footer>
     )

@@ -6,18 +6,11 @@ import { Toaster } from "react-hot-toast";
 import Layout from './pages/Layout';
 import NotFound from './pages/NotFound';
 import About from './pages/About';
-import Notification from './pages/Notification';
 import Login from "./pages/Login";
-import Events from "./pages/Events";
-import Membership from "./pages/Membership";
-import Projects from "./pages/Projects";
-import Resources from "./pages/Resources";
 import ChatRoom from "./pages/ChatRoom";
-import Songs from "./pages/Songs";
-import Archives from "./pages/Archives";
-import Important from "./pages/Important";
 import { GlobalContext } from "./context";
 import { User } from "./types/definitions";
+import CreateAccount from "./pages/CreateAccount";
 
 function App() {
   const [user,setUser]=useState<User>({
@@ -82,15 +75,8 @@ function App() {
               <Route path="/login" element={!isAuth?<Login/>:<Navigate to="/"/>}/>
               <Route path="/" element={isAuth?<Layout />:<Navigate to="/login"/>}>
                 <Route index element={<About />} />
-                <Route path="notification" element={<Notification />} />
-                <Route path="events" element={<Events />} />
-                <Route path="membership" element={<Membership />} />
-                <Route path="projects" element={<Projects />} />
-                <Route path="resources" element={<Resources />} />
                 <Route path="chat_room" element={<ChatRoom />} />
-                <Route path="songs" element={<Songs />} />
-                <Route path="archives" element={<Archives />} />
-                <Route path="important" element={<Important />} />
+                <Route path="create" element={<CreateAccount />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
