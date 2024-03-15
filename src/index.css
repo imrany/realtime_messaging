@@ -23,7 +23,15 @@
   --theme-gray:#f9f9f9;
   --theme-yellow:rgb(199, 140, 31);
   --hover-blue:#535bf2;
+} 
+
+.sidebar::-webkit-scrollbar{
+  display: none;
 }
+.sidebar{
+  scrollbar-width: none;
+}
+
 #notifcation_hero_image{
   background: linear-gradient(rgba(40, 40, 41, 0.5), rgba(24, 23, 26, 0.5)),
   url("./assets/team-dynamics.png");

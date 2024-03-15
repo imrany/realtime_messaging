@@ -125,7 +125,7 @@ function ChatRoom() {
     return (
         <div className="p-10 flex gap-4 max-sm:flex-wrap min-h-[50vh]">
             {showChats?(<div className="flex-grow border-r-[2px] pr-3 border-dotted">
-                <div className="flex flex-col overflow-y-auto h-[65vh] gap-6 text-sm mb-8">
+                <div className="flex sidebar flex-col overflow-y-auto h-[65vh] gap-6 text-sm mb-8">
                     {chats.length!==0?chats.map((chat)=>{
                         return(
                             <div className="flex flex-col py-8 border-b-[1px]" key={chat.id}>
