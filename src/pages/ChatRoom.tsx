@@ -13,6 +13,7 @@ function ChatRoom() {
     let md_screen:boolean=screen.width>930||screen.width===930?true:false;
     const [chats,setChats]=useState<Chat[]>([
         {
+            chat_number:0,
             from:"",
             message:"",
             time:"",
@@ -56,6 +57,7 @@ function ChatRoom() {
             e.preventDefault()
             setDisable(true)
             let message:Chat={
+                chat_number:chats.length+1,
                 from:email,
                 message:e.target.message.value,
                 time,
@@ -77,7 +79,7 @@ function ChatRoom() {
 
     async function fetchChatsFromFirebase(){
         try {
-            const querySnapshot=await getDocs(collection(db,"chats"));
+            const querySnapshot=await getDocs(collection(db,"chats"))
             let list:Chat[]=[]
             querySnapshot.forEach((doc) => {
                 let data={
@@ -85,10 +87,15 @@ function ChatRoom() {
                     from:doc.data().from,
                     message:doc.data().message,
                     time:doc.data().time,
-                    today:doc.data().today
+                    today:doc.data().today,
+                    chat_number:doc.data().chat_number
                 }
                 list.push(data)
             });
+            list.sort((a,b)=>{
+                return a.chat_number - b.chat_number;
+            })
+            console.log(list)
             setChats([...list])
         } catch (error:any) {
             console.log(error)

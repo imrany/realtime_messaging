@@ -37,6 +37,7 @@ interface User{
 }
 
 interface Chat{
+    chat_number:number,
     id?:string,
     from:string,
     message:string,
